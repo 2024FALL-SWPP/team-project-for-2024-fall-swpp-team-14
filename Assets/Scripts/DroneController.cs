@@ -8,6 +8,8 @@ public class DroneController : MonoBehaviour
     float elevationInput;
     public float droneSpeed = 30.0f;
     private float tiltAngle = 10f;
+    public GameObject[] propellers;
+    private float propellerRotateSpeed = 2000.0f;
     void Start()
     {
 
@@ -30,6 +32,13 @@ public class DroneController : MonoBehaviour
         else
         {
             transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
+        UpdatePropellers();
+    }
+
+    void UpdatePropellers() {
+        for (int i = 0; i < propellers.Length; i++) {
+            propellers[i].transform.Rotate(0, 0, propellerRotateSpeed * Time.deltaTime);
         }
     }
 }

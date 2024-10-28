@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726032245353415506}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 4.743, y: 9.767, z: -2.839}
   m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_ConstrainProportionsScale: 0
@@ -60,6 +60,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   droneSpeed: 1
+  propellers:
+  - {fileID: 5397014911308358619}
+  - {fileID: 2179795199257230817}
+  - {fileID: 1494782234881957680}
+  - {fileID: 4727303668084009656}
 --- !u!1001 &726032244934887118
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -216,5 +221,25 @@ PrefabInstance:
 --- !u!4 &980055219598500133 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 35004f51827b4024d8fb0f75a47adf22, type: 3}
+  m_PrefabInstance: {fileID: 726032244934887118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1494782234881957680 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2210681373992606206, guid: 35004f51827b4024d8fb0f75a47adf22, type: 3}
+  m_PrefabInstance: {fileID: 726032244934887118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2179795199257230817 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7758767205318722769, guid: 35004f51827b4024d8fb0f75a47adf22, type: 3}
+  m_PrefabInstance: {fileID: 726032244934887118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4727303668084009656 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5443061777851919478, guid: 35004f51827b4024d8fb0f75a47adf22, type: 3}
+  m_PrefabInstance: {fileID: 726032244934887118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5397014911308358619 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -4542603644958694123, guid: 35004f51827b4024d8fb0f75a47adf22, type: 3}
   m_PrefabInstance: {fileID: 726032244934887118}
   m_PrefabAsset: {fileID: 0}
