@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3322246234703569443}
   m_Layer: 0
   m_Name: Drone
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65,6 +65,8 @@ MonoBehaviour:
   - {fileID: 2179795199257230817}
   - {fileID: 1494782234881957680}
   - {fileID: 4727303668084009656}
+  laserProjectile: {fileID: 1630976601828381676, guid: a76940d14ec2848838922d53199d9a88, type: 3}
+  currentReloadCnt: 20
 --- !u!1001 &726032244934887118
 PrefabInstance:
   m_ObjectHideFlags: 0

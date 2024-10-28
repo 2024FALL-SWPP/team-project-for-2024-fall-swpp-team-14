@@ -10,6 +10,9 @@ public class DroneController : MonoBehaviour
     private float tiltAngle = 10f;
     public GameObject[] propellers;
     private float propellerRotateSpeed = 2000.0f;
+    public GameObject laserProjectile;
+    public int currentReloadCnt = 20;
+    private int MaxReloadCnt = 20;
     void Start()
     {
 
@@ -34,11 +37,38 @@ public class DroneController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, -90, 0);
         }
         UpdatePropellers();
+        if (Input.GetMouseButtonDown(0))
+        {
+            ShootLaser();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ReloadLaser();
+        }
     }
 
-    void UpdatePropellers() {
-        for (int i = 0; i < propellers.Length; i++) {
+    void UpdatePropellers()
+    {
+        for (int i = 0; i < propellers.Length; i++)
+        {
             propellers[i].transform.Rotate(0, 0, propellerRotateSpeed * Time.deltaTime);
         }
+    }
+
+    void ShootLaser()
+    {
+        if (currentReloadCnt > 0)
+        {
+            currentReloadCnt -= 1;
+            // Quaternion shootRotation = Quaternion.LookRotation(transform.up);
+            Quaternion shootRotation = Quaternion.Euler(transform.up);
+            Vector3 shootPosition = transform.position - transform.right * 0.47f;
+            Instantiate(laserProjectile, shootPosition, shootRotation);
+        }
+    }
+
+    void ReloadLaser()
+    {
+        currentReloadCnt = MaxReloadCnt;
     }
 }
