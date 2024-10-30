@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 public class DroneController : MonoBehaviour
 {
+    private AudioSource playerAudio;
+    public AudioClip shootLaserAudio;
     float horizontalInput;
     float verticalInput;
     float elevationInput;
@@ -15,7 +17,7 @@ public class DroneController : MonoBehaviour
     private int MaxReloadCnt = 20;
     void Start()
     {
-
+        playerAudio = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -60,7 +62,7 @@ public class DroneController : MonoBehaviour
         if (currentReloadCnt > 0)
         {
             currentReloadCnt -= 1;
-            // Quaternion shootRotation = Quaternion.LookRotation(transform.up);
+            playerAudio.PlayOneShot(shootLaserAudio);
             Quaternion shootRotation = Quaternion.Euler(transform.up);
             Vector3 shootPosition = transform.position - transform.right * 0.47f;
             Instantiate(laserProjectile, shootPosition, shootRotation);
