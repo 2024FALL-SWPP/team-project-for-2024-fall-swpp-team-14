@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 24
-  productGUID: a036dcc7425344524a4c62771afbc81c
+  productGUID: 31d6e508602d8480a80ebd07d1c04a8f
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: TutorialMap_1102
+  productName: DroneFPS
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -734,11 +734,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: ad8c9ab5-b7e3-4e27-ab02-608d8b590dc0
+  cloudProjectId: 6c8324fb-1fb3-4808-beea-fc22477553f1
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: TutorialMap_1102
-  organizationId: yebin1926
+  projectName: DroneFPS
+  organizationId: ohajun12
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
