@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 public class DroneController : MonoBehaviour
 {
+    private int hp = 100;
+    
     private AudioSource playerAudio;
     public AudioClip shootLaserAudio;
     float horizontalInput;
@@ -15,6 +17,7 @@ public class DroneController : MonoBehaviour
     public GameObject laserProjectile;
     public int currentReloadCnt = 20;
     private int MaxReloadCnt = 20;
+
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
@@ -72,5 +75,12 @@ public class DroneController : MonoBehaviour
     void ReloadLaser()
     {
         currentReloadCnt = MaxReloadCnt;
+    }
+
+    void OnTriggerEnter(Collider other){
+        if(other.CompareTag("Laser")){
+            hp -= 10;
+            Debug.Log("hp decrease");
+        }
     }
 }
