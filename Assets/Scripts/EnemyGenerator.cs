@@ -252,9 +252,13 @@ public class EnemyGenerator : MonoBehaviour
     void Start()
     {
         //EnemySetter(60.82f, 2.1f, -5.93f, 90f);
-        WorkingEnemySetter(60.82f, 2.1f, -5.93f, 90f, 65.82f, -5.93f, 2f);
+        //WorkingEnemySetter(60.82f, 2.1f, -5.93f, 90f, 65.82f, -5.93f, 2f);
+
         PatrolEnemySetter(29.37f, 9.8f, -6.41f, 90f, 56.17f, -6.41f, 2f);
         PatrolEnemySetter(56.17f, 9.8f, -19.9f, -90f, 29.37f, -19.9f, 2f);
+        StandingEnemySetter(59.82f, 2.09182f, -5.931f, 90f, 2f);
+        StandingEnemySetter(59.82f, 1.908182f, -9.72f, 90f, 2f);
+        PatrolEnemySetter(54.637f, 3.385209f, -29.76f, 0f, 54.637f, -19.76f, 2f);
     }
 
     // Update is called once per frame

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2531458905269513835}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sliced Wall Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 4029161823185059124}
   - component: {fileID: 4222416322702039454}
   - component: {fileID: 8826500126391447337}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LP_Door_frame_snaps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 7134417337991881049}
   - component: {fileID: 2782051474958747531}
   - component: {fileID: 954917090004251578}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LP_Door_Wall_snaps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
