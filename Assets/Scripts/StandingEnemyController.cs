@@ -11,6 +11,14 @@ public class StandingEnemyController : MonoBehaviour
     private Animator animator;
     private Vector3 direction;
     private LayerMask obstacleLayerMask = 1 << 6;
+    private UnityEngine.AI.NavMeshAgent nmAgent;
+    private float lastDetectTime;
+    private float lastAttackTime;
+    private Vector3 initPosition;
+    public float initDistance;
+    private GameObject laserPrefab;
+    private int alertState = 0;
+    private int delayCount = 2;
 
     public void setInitX(float initx)
     {
@@ -27,6 +35,10 @@ public class StandingEnemyController : MonoBehaviour
     public void setInitYRot(float inityrot)
     {
         this.initYRot = inityrot;
+    }
+    public void setLaserPrefab(GameObject laserPrefab)
+    {
+        this.laserPrefab = laserPrefab;
     }
     public float getInitX()
     {
@@ -53,13 +65,13 @@ public class StandingEnemyController : MonoBehaviour
         return this.speed;
     }
 
-    bool IsVisible(Vector3 toPosition)
+    bool IsVisible(Vector3 toPosition, int distanceLimit)
     {
         Vector3 headPosition = transform.position + Vector3.up * 2;
         Vector3 direction = toPosition - headPosition;
         float distance = direction.magnitude;
 
-        if (distance > 12)
+        if (distance > distanceLimit)
         {
             return false;
         }
@@ -76,33 +88,94 @@ public class StandingEnemyController : MonoBehaviour
         return true; // 장애물이 없는 경우
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player");
+        nmAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        initPosition = new Vector3(initX, initY, initZ);
+        lastDetectTime = -1000;
+        lastAttackTime = -1000;
+        alertState = 0;
+        delayCount = 2;
     }
 
-    // Update is called once per frame
-    void Update()
+    void AlertZero()
     {
-        playerPosition = player.transform;
-        if (IsVisible(playerPosition.position))
+        initDistance = (initPosition - transform.position).magnitude;
+        alertState = 0;
+        animator.SetBool("Is_Aiming", false);
+        nmAgent.isStopped = false;
+        if (initDistance >= 0.5f)
         {
-            direction = playerPosition.position - transform.position;
-            direction.y = 0;
-            if (direction.magnitude >= 0.5f)
-            {
-                animator.SetBool("Patrol", true);
-                transform.rotation = Quaternion.LookRotation(direction);
-                transform.Translate(Vector3.forward * speed * Time.deltaTime);
-            }
-            Debug.Log("Player is visible from StandingEnemy.");
+            animator.SetBool("Patrol", true);
+            nmAgent.SetDestination(initPosition);
         }
         else
         {
             animator.SetBool("Patrol", false);
-            Debug.Log("Player is not visible from StandingEnemy.");
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, initYRot, 0), Time.deltaTime * 2);
+        }
+        delayCount = 2;
+    }
+
+    void AlertOne()
+    {
+        alertState = 1;
+        nmAgent.isStopped = false;
+        animator.SetBool("Patrol", true);
+        animator.SetBool("Is_Aiming", false);
+        nmAgent.SetDestination(playerPosition.position);
+        delayCount = 2;
+    }
+
+    void AlertTwo()
+    {
+        alertState = 2;
+        nmAgent.isStopped = true;
+        animator.SetBool("Is_Aiming", true);
+        Vector3 firePosition = transform.position + transform.up * 1.41f + transform.forward * 1.79f + transform.right * 0.21f;
+        direction = playerPosition.position - firePosition;
+        transform.LookAt(new Vector3(playerPosition.position.x, transform.position.y, playerPosition.position.z));
+        if (Time.time - lastAttackTime > 0.5f)
+        {
+            if (delayCount > 0)
+            {
+                delayCount--;
+                lastAttackTime = Time.time;
+            }
+            else
+            {
+                Instantiate(laserPrefab, firePosition, Quaternion.LookRotation(direction));
+                lastAttackTime = Time.time;
+            }
+        }
+    }
+
+    void Update()
+    {
+        playerPosition = player.transform;
+        initDistance = (initPosition - transform.position).magnitude;
+
+        if (IsVisible(playerPosition.position, 12))
+        {
+            if ((alertState >= 2 && IsVisible(playerPosition.position, 10)) || IsVisible(playerPosition.position, 8))
+            {
+                AlertTwo();
+            }
+            else
+            {
+                AlertOne();
+            }
+            lastDetectTime = Time.time;
+        }
+        else if (Time.time - lastDetectTime < 3)
+        {
+            AlertOne();
+        }
+        else
+        {
+            AlertZero();
         }
     }
 }
