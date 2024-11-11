@@ -14,6 +14,14 @@ public class InteractionManager : MonoBehaviour
 
     private Outline outline;
 
+    private DroneController droneController;
+    private bool isInteracting = false;
+
+    private bool interactionSucceed;
+
+    private Vector3 initialPosition;
+    private GameObject drone;
+
     private void Awake()
     {
         if (Instance == null)
@@ -35,14 +43,18 @@ public class InteractionManager : MonoBehaviour
 
         Debug.DrawRay(ray.origin, ray.direction * 1f, Color.red);
 
-        if (Physics.Raycast(ray, out hit, 1f, LayerMask.GetMask("Interactable")))
+        if (Physics.Raycast(ray, out hit, 1f, LayerMask.GetMask("interactable")) && !isInteracting)
         {
-            // Debug.Log(hit.collider.gameObject);
             outline = hit.collider.gameObject.GetComponent<Outline>();
             outline.enabled = true;
-            if (Input.GetKeyDown(KeyCode.F)) {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                isInteracting = true;
+
+                initialPosition = drone.transform.position;
                 mainCamera.transform.position = new Vector3(-0.9679f, 0.06713f, 6.8644f);
                 mainCamera.transform.rotation = Quaternion.Euler(new Vector3(21.725f, -0.304f, 0f));
+                droneController.DisableControl();
             }
         }
         else
@@ -53,6 +65,23 @@ public class InteractionManager : MonoBehaviour
             }
             // ClearHighlight();
         }
+
+    }
+
+    public void InteractionSucceed()
+    {
+        isInteracting = false;
+        Debug.Log("Mission complete");
+        droneController.EnableControl();
+        drone.transform.position = initialPosition;
+    }
+
+    public void escapeInteraction()
+    {
+        isInteracting = false;
+        Debug.Log("UI escaped");
+        droneController.EnableControl();
+        drone.transform.position = initialPosition;
     }
     // void SetHighlight(GameObject obj)
     // {
@@ -77,9 +106,10 @@ public class InteractionManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        GameObject[] interactableObjects =  GameObject.FindGameObjectsWithTag("interactable");
-        for (int i = 0; i < interactableObjects.Length; i++) {
-            interactableObjects[i].GetComponent<Outline>().enabled = false;   
+        GameObject[] interactableObjects = GameObject.FindGameObjectsWithTag("Interactable");
+        for (int i = 0; i < interactableObjects.Length; i++)
+        {
+            interactableObjects[i].GetComponent<Outline>().enabled = false;
         }
         // 씬이 로드될 때마다 메인 카메라를 다시 찾기
         mainCamera = Camera.main;
@@ -88,6 +118,13 @@ public class InteractionManager : MonoBehaviour
             // 새 카메라에 상호작용 스크립트 추가 또는 카메라 참조 업데이트
             Debug.Log("New Camera Loaded in Scene: " + scene.name);
         }
+        droneController = GameObject.Find("Drone").GetComponent<DroneController>();
+        drone = GameObject.Find("Drone");
+    }
+
+    public void passwordSuccess()
+    {
+
     }
 
     public Camera GetMainCamera()

@@ -15,38 +15,54 @@ public class DroneController : MonoBehaviour
     public GameObject laserProjectile;
     public int currentReloadCnt = 20;
     private int MaxReloadCnt = 20;
+    private bool controlEnabled = true;
+
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
     }
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        elevationInput = Input.GetAxis("Elevation");
+        if (controlEnabled)
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
+            elevationInput = Input.GetAxis("Elevation");
 
-        Vector3 moveDirection = (Vector3.right * -horizontalInput) + (Vector3.forward * -verticalInput);
-        transform.Translate(moveDirection * Time.deltaTime * droneSpeed, Space.World);
-        transform.Translate(Vector3.up * elevationInput * Time.deltaTime * droneSpeed, Space.World);
-        float tiltX = horizontalInput * tiltAngle;
-        float tiltZ = verticalInput * tiltAngle;
-        if (horizontalInput != 0 || verticalInput != 0)
-        {
-            transform.rotation = Quaternion.Euler(tiltX, -90, tiltZ);
-        }
-        else
-        {
-            transform.rotation = Quaternion.Euler(0, -90, 0);
+            Vector3 moveDirection = (Vector3.right * -horizontalInput) + (Vector3.forward * -verticalInput);
+            transform.Translate(moveDirection * Time.deltaTime * droneSpeed, Space.World);
+            transform.Translate(Vector3.up * elevationInput * Time.deltaTime * droneSpeed, Space.World);
+            float tiltX = horizontalInput * tiltAngle;
+            float tiltZ = verticalInput * tiltAngle;
+            if (horizontalInput != 0 || verticalInput != 0)
+            {
+                transform.rotation = Quaternion.Euler(tiltX, -90, tiltZ);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, -90, 0);
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+                ShootLaser();
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                ReloadLaser();
+            }
         }
         UpdatePropellers();
-        if (Input.GetMouseButtonDown(0))
-        {
-            ShootLaser();
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ReloadLaser();
-        }
+
+    }
+
+    public void EnableControl()
+    {
+        controlEnabled = true;
+    }
+
+    public void DisableControl()
+    {
+        controlEnabled = false;
     }
 
     void UpdatePropellers()
