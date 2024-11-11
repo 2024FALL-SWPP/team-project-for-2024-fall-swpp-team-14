@@ -19,12 +19,15 @@ public class DroneController : MonoBehaviour
     private float mouseSensitivity = 10f;
     Quaternion originalRotation;
     Rigidbody rb;
+    private Transform droneCamera;
+    private bool canShoot = true;
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
         aircraft = transform.Find("Aircraft1");
         originalRotation = aircraft.rotation;
         rb = GetComponent<Rigidbody>();
+        droneCamera = transform.Find("Main Camera");
     }
     void Update()
     {
@@ -32,7 +35,7 @@ public class DroneController : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
         elevationInput = Input.GetAxis("Elevation");
         Vector3 moveDirection = (Vector3.right * horizontalInput) + (Vector3.forward * verticalInput) + (Vector3.up * elevationInput);
-        rb.velocity = droneSpeed*transform.TransformDirection(moveDirection);
+        rb.velocity = droneSpeed * transform.TransformDirection(moveDirection);
 
         Quaternion tiltHorizontal = Quaternion.Euler(horizontalInput * tiltAngle, 0, 0);
         Quaternion tiltVertical = Quaternion.Euler(0, -verticalInput * tiltAngle, 0);
@@ -52,6 +55,28 @@ public class DroneController : MonoBehaviour
         }
     }
 
+    void LateUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            droneCamera.localPosition = new Vector3(0, 16, -50);
+            droneCamera.localRotation = Quaternion.Euler(0, 0, 0);
+            canShoot = true;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            droneCamera.localPosition = new Vector3(0, -12, -50);
+            droneCamera.localRotation = Quaternion.Euler(-45, 0, 0);
+            canShoot = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            droneCamera.localPosition = new Vector3(0, 16, -50);
+            droneCamera.localRotation = Quaternion.Euler(45, 0, 0);
+            canShoot = false;
+        }
+    }
+
     void UpdatePropellers()
     {
         for (int i = 0; i < propellers.Length; i++)
@@ -62,7 +87,7 @@ public class DroneController : MonoBehaviour
 
     void ShootLaser()
     {
-        if (currentReloadCnt > 0)
+        if (currentReloadCnt > 0 && canShoot)
         {
             currentReloadCnt -= 1;
             playerAudio.PlayOneShot(shootLaserAudio);
