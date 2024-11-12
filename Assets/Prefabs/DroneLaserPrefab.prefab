@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7562544710209327671}
   m_Layer: 0
   m_Name: DroneLaserPrefab
-  m_TagString: Laser
+  m_TagString: DroneLaser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -133,14 +133,16 @@ public class PatrolEnemyController : MonoBehaviour
         {
             nmAgent.SetDestination(initPosition);
         }
-        else{
+        else
+        {
             returnToWork = false;
             Move();
         }
         delayCount = 2;
     }
 
-    void AlertOne(){
+    void AlertOne()
+    {
         returnToWork = true;
         alertState = 1;
         nmAgent.isStopped = false;
