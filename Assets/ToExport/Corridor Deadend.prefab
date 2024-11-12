@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8877331901013329213}
   - component: {fileID: 8877331901014460413}
   - component: {fileID: 1922223317392174954}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Corridor Deadend
   m_TagString: Untagged
   m_Icon: {fileID: 0}
