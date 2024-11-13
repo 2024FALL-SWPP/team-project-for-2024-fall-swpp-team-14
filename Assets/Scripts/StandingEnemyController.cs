@@ -20,6 +20,8 @@ public class StandingEnemyController : MonoBehaviour
     private int alertState = 0;
     private int delayCount = 2;
 
+    private EnemyHealthManager enemyHealthManager;
+
     public void setInitX(float initx)
     {
         this.initX = initx;
@@ -98,6 +100,7 @@ public class StandingEnemyController : MonoBehaviour
         lastAttackTime = -1000;
         alertState = 0;
         delayCount = 2;
+        enemyHealthManager = GetComponent<EnemyHealthManager>();
     }
 
     void AlertZero()
@@ -154,6 +157,15 @@ public class StandingEnemyController : MonoBehaviour
 
     void Update()
     {
+        if (enemyHealthManager != null && enemyHealthManager.checkDeath())
+        {
+            if (nmAgent != null && nmAgent.enabled)
+            {
+                nmAgent.enabled = false; // Disable the NavMeshAgent on death
+            }
+            return; // Exit Update if the enemy is dead
+        }
+
         playerPosition = player.transform;
         initDistance = (initPosition - transform.position).magnitude;
 

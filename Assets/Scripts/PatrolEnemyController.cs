@@ -23,6 +23,8 @@ public class PatrolEnemyController : MonoBehaviour
 
     private bool returnToWork = false;
 
+    private EnemyHealthManager enemyHealthManager;
+
     public void setInitX(float initx)
     {
         this.initX = initx;
@@ -191,11 +193,21 @@ public class PatrolEnemyController : MonoBehaviour
         lastDetectTime = -1000;
         lastAttackTime = -1000;
         delayCount = 2;
+        
+        enemyHealthManager = GetComponent<EnemyHealthManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (enemyHealthManager != null && enemyHealthManager.checkDeath())
+        {
+            if (nmAgent != null && nmAgent.enabled)
+            {
+                nmAgent.enabled = false; // Disable the NavMeshAgent on death
+            }
+            return; // Exit Update if the enemy is dead
+        }
         playerPosition = player.transform;
         initDistance = (initPosition - transform.position).magnitude;
         if (IsVisible(playerPosition.position, 12))

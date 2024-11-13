@@ -34,4 +34,9 @@ public class EnemyHealthManager : MonoBehaviour
             Debug.Log("enemy hp decrease");
         }
     }
+
+    public bool checkDeath()
+    {
+        return this.isDead;
+    }
 }
