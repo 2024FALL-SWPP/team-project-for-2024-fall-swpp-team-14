@@ -4,17 +4,17 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class LaptopController : MonoBehaviour
+public class LaptopController : InteractionController
 {
     public TextMeshProUGUI passwordInput;
-    private InteractionManager interactionManager;
-    private bool isInteractionSucceed = false;
+    // private InteractionManager interactionManager;
+    // private bool isInteractionSuccessful = false;
     private bool isInteractionDoing = false;
     // Start is called before the first frame update
-    void Start()
-    {
-        interactionManager = GameObject.Find("InteractionManager").GetComponent<InteractionManager>();
-    }
+    // void Start()
+    // {
+    //     interactionManager = GameObject.Find("InteractionManager").GetComponent<InteractionManager>();
+    // }
 
 
     private KeyCode[] NumberkeyCodes =
@@ -34,7 +34,7 @@ public class LaptopController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isInteractionSucceed && isInteractionDoing)
+        if (!isInteractionSuccessful && isInteractionDoing)
         {
             for (int i = 0; i < NumberkeyCodes.Length; i++)
             {
@@ -55,7 +55,7 @@ public class LaptopController : MonoBehaviour
 
             if (passwordInput.text == "1414")
             {
-                isInteractionSucceed = true;
+                isInteractionSuccessful = true;
                 isInteractionDoing = false;
                 interactionManager.ExitInteraction(true);
                 Debug.Log("Laptop interaction succeed");
@@ -66,13 +66,15 @@ public class LaptopController : MonoBehaviour
         }
     }
 
-    public void StartInteraction() {
+    public override void StartInteraction()
+    {
         isInteractionDoing = true;
     }
 
-    public bool CanInteract() {
-        return !isInteractionSucceed;
-    }
+    // public bool CanInteract()
+    // {
+    //     return !isInteractionSuccessful;
+    // }
 
 
 }
