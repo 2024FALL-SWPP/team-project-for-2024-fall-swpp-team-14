@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Laser
+  - Enemy
+  - DroneLaser
   layers:
   - Default
   - TransparentFX
@@ -12,7 +14,7 @@ TagManager:
   - PostProcess
   - Water
   - UI
-  - 
+  - Obstacle
   - 
   - 
   - 
