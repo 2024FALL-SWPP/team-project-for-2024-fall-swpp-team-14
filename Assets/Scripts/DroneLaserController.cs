@@ -14,7 +14,7 @@ public class DroneLaserController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(-transform.forward * Time.deltaTime * droneLaserSpeed);
+        transform.Translate(transform.forward * Time.deltaTime * droneLaserSpeed, Space.World);
     }
 
     void OnCollisionEnter(Collision collision)
