@@ -7,7 +7,7 @@ public abstract class InteractionController : MonoBehaviour
     protected bool isInteractionSuccessful = false;
     protected InteractionManager interactionManager;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         interactionManager = GameObject.Find("InteractionManager").GetComponent<InteractionManager>();
     }

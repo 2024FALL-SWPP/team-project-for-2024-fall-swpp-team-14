@@ -99,7 +99,8 @@ public class InteractionManager : MonoBehaviour
         laptopCamera.enabled = false;
         drone.SetActive(true);
         droneController.EnableControl();
-        if (succeed) {
+        if (succeed)
+        {
             droneUIManager.HidePressInteractionImage();
         }
     }

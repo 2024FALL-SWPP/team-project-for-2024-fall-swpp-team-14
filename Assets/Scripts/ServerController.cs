@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class ServerController : InteractionController
 {
-    // private bool isInteractionSuccessful = false;
-    // private InteractionManager interactionManager;
-
-    // Start is called before the first frame update
-    // void Start()
-    // {
-    //     interactionManager = GameObject.Find("InteractionManager").GetComponent<InteractionManager>();
-    // }
 
     // Update is called once per frame
     void Update()
@@ -26,8 +18,4 @@ public class ServerController : InteractionController
         interactionManager.ExitInteraction(true);
     }
 
-    //     public bool CanInteract()
-    //     {
-    //         return !isInteractionSuccessful;
-    //     }
 }

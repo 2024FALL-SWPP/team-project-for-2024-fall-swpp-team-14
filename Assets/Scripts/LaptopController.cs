@@ -7,15 +7,8 @@ using UnityEngine.UI;
 public class LaptopController : InteractionController
 {
     public TextMeshProUGUI passwordInput;
-    // private InteractionManager interactionManager;
-    // private bool isInteractionSuccessful = false;
+    public string passwordAnswer = "defaultPassword";
     private bool isInteractionDoing = false;
-    // Start is called before the first frame update
-    // void Start()
-    // {
-    //     interactionManager = GameObject.Find("InteractionManager").GetComponent<InteractionManager>();
-    // }
-
 
     private KeyCode[] NumberkeyCodes =
     {
@@ -53,7 +46,7 @@ public class LaptopController : InteractionController
                 passwordInput.text = passwordInput.text.Substring(0, passwordInput.text.Length - 1);
             }
 
-            if (passwordInput.text == "1414")
+            if (passwordInput.text == passwordAnswer)
             {
                 isInteractionSuccessful = true;
                 isInteractionDoing = false;
@@ -70,11 +63,5 @@ public class LaptopController : InteractionController
     {
         isInteractionDoing = true;
     }
-
-    // public bool CanInteract()
-    // {
-    //     return !isInteractionSuccessful;
-    // }
-
 
 }
