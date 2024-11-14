@@ -17575,7 +17575,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 876413804, guid: c775db7e4753a4fdd95b2f0846129879, type: 3}
       propertyPath: passwordAnswer
-      value: 1414
+      value: 1234
       objectReference: {fileID: 0}
     - target: {fileID: 443717799488226827, guid: c775db7e4753a4fdd95b2f0846129879, type: 3}
       propertyPath: m_Name
@@ -22584,6 +22584,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 963194227, guid: 66876cdd8fe124e73a007741bdc8804b, type: 3}
+      propertyPath: m_OcclusionCulling
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 726032245353415506, guid: 66876cdd8fe124e73a007741bdc8804b, type: 3}
       propertyPath: m_Name
       value: Drone
