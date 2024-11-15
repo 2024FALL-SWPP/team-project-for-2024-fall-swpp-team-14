@@ -8,21 +8,19 @@ public class EnemyHealthManager : MonoBehaviour
     private bool isDead = false;
     Animator enemyAnimator;
     private ParticleSystem deathParticle;
-    // private AudioSource enemyAudio;
-    // public AudioClip enemyDeathAudio;
-    // Start is called before the first frame update
+    private AudioSource enemyAudio;
+    public AudioClip enemyDeathAudio;
+
     void Start()
     {
         enemyAnimator = GetComponent<Animator>();
         deathParticle = transform.Find("EnergyExplosion")?.GetComponent<ParticleSystem>();
-        if (deathParticle == null)
+        enemyAudio = Camera.main.GetComponent<AudioSource>();
+        if (deathParticle == null || enemyAudio == null || enemyDeathAudio == null)
         {
-            Debug.LogWarning("No particle system named 'EnergyExplosion' found in the enemy object.");
+            Debug.LogWarning("Particle or audio is null");
         }
-        else
-        {
-            deathParticle.Stop(); // Ensure it’s stopped at the start
-        }
+        enemyAudio.ignoreListenerPause = true;
     }
 
     // Update is called once per frame
@@ -32,7 +30,6 @@ public class EnemyHealthManager : MonoBehaviour
         {
             isDead = true;
             enemyAnimator.SetBool("Is_Death", true);
-            Debug.Log("enemy is dead");
             Invoke("DestroyEnemy", 3f);
         }
     }
@@ -40,6 +37,7 @@ public class EnemyHealthManager : MonoBehaviour
     void DestroyEnemy()
     {
         deathParticle.Play();
+        enemyAudio.PlayOneShot(enemyDeathAudio);
         Destroy(gameObject, 0.8f); //destroy enemy after 10 seconds
     }
 

@@ -2210,6 +2210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b5db6bc82f64757810528cebcd2044, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyDeathAudio: {fileID: 8300000, guid: ff0d35c615e4e42539f9406f98fc0ec0, type: 3}
 --- !u!114 &-252227322433708669
 MonoBehaviour:
   m_ObjectHideFlags: 0
