@@ -37,7 +37,10 @@ public class EnemyHealthManager : MonoBehaviour
     void DestroyEnemy()
     {
         deathParticle.Play();
-        enemyAudio.PlayOneShot(enemyDeathAudio);
+        if (!enemyAudio.isPlaying)
+        {
+            enemyAudio.PlayOneShot(enemyDeathAudio);
+        }
         Destroy(gameObject, 0.8f); //destroy enemy after 10 seconds
     }
 
