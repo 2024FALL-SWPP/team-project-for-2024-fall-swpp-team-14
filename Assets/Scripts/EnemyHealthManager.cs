@@ -7,10 +7,20 @@ public class EnemyHealthManager : MonoBehaviour
     private int enemyHp = 100;
     private bool isDead = false;
     Animator enemyAnimator;
-    // Start is called before the first frame update
+    private ParticleSystem deathParticle;
+    private AudioSource enemyAudio;
+    public AudioClip enemyDeathAudio;
+
     void Start()
     {
         enemyAnimator = GetComponent<Animator>();
+        deathParticle = transform.Find("EnergyExplosion")?.GetComponent<ParticleSystem>();
+        enemyAudio = Camera.main.GetComponent<AudioSource>();
+        if (deathParticle == null || enemyAudio == null || enemyDeathAudio == null)
+        {
+            Debug.LogWarning("Particle or audio is null");
+        }
+        enemyAudio.ignoreListenerPause = true;
     }
 
     // Update is called once per frame
@@ -20,10 +30,15 @@ public class EnemyHealthManager : MonoBehaviour
         {
             isDead = true;
             enemyAnimator.SetBool("Is_Death", true);
-            Debug.Log("enemy is dead");
-            Destroy(gameObject, 10f); //destroy enemy after 10 seconds
-            //stop shooting
+            Invoke("DestroyEnemy", 3f);
         }
+    }
+
+    void DestroyEnemy()
+    {
+        deathParticle.Play();
+        enemyAudio.PlayOneShot(enemyDeathAudio);
+        Destroy(gameObject, 0.8f); //destroy enemy after 10 seconds
     }
 
     void OnTriggerEnter(Collider other)
