@@ -193,7 +193,7 @@ public class PatrolEnemyController : MonoBehaviour
         lastDetectTime = -1000;
         lastAttackTime = -1000;
         delayCount = 2;
-        
+
         enemyHealthManager = GetComponent<EnemyHealthManager>();
     }
 

@@ -3,7 +3,8 @@ guid: a8b5db6bc82f64757810528cebcd2044
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - enemyDeathAudio: {fileID: 8300000, guid: ff0d35c615e4e42539f9406f98fc0ec0, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

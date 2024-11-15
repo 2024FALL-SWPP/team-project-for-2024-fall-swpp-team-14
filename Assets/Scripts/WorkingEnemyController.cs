@@ -219,7 +219,7 @@ public class WorkingEnemyController : MonoBehaviour
             }
             return; // Exit Update if the enemy is dead
         }
-        
+
         playerPosition = player.transform;
         initDistance = (initPosition - transform.position).magnitude;
         if (IsVisible(playerPosition.position, 12))

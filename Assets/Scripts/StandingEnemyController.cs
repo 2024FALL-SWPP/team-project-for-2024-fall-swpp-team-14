@@ -22,6 +22,7 @@ public class StandingEnemyController : MonoBehaviour
 
     private EnemyHealthManager enemyHealthManager;
 
+
     public void setInitX(float initx)
     {
         this.initX = initx;
