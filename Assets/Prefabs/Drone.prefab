@@ -523,7 +523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootLaserAudio: {fileID: 8300000, guid: 703a1b7d0d326461d8868a21106fb1a9, type: 3}
-  droneSpeed: 1
+  droneSpeed: 3
   propellers:
   - {fileID: 5397014911308358619}
   - {fileID: 2179795199257230817}
@@ -541,7 +541,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d4c4de669fdde4f1793a141b01b28584, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3aa1a413cbe284a24875caac6a57abf5, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
