@@ -95,6 +95,28 @@ public class DroneController : MonoBehaviour
         }
     }
 
+    void LateUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            droneCamera.localPosition = new Vector3(0, 16, -50);
+            droneCamera.localRotation = Quaternion.Euler(0, 0, 0);
+            canShoot = true;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            droneCamera.localPosition = new Vector3(0, -12, -50);
+            droneCamera.localRotation = Quaternion.Euler(-45, 0, 0);
+            canShoot = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            droneCamera.localPosition = new Vector3(0, 16, -50);
+            droneCamera.localRotation = Quaternion.Euler(45, 0, 0);
+            canShoot = false;
+        }
+    }
+
     void UpdatePropellers()
     {
         for (int i = 0; i < propellers.Length; i++)
