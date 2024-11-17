@@ -96,7 +96,11 @@ public class InteractionManager : MonoBehaviour
     public void ExitInteraction(bool succeed)
     {
         isInteracting = false;
-        laptopCamera.enabled = false;
+        if (laptopCamera != null)
+        {
+            laptopCamera.enabled = false;
+        }
+
         drone.SetActive(true);
         droneController.EnableControl();
         if (succeed)
