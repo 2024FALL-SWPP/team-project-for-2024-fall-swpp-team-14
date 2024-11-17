@@ -26,12 +26,7 @@ public class EnemyHealthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyHp == 0)
-        {
-            isDead = true;
-            enemyAnimator.SetBool("Is_Death", true);
-            Invoke("DestroyEnemy", 3f);
-        }
+
     }
 
     void DestroyEnemy()
@@ -50,6 +45,12 @@ public class EnemyHealthManager : MonoBehaviour
         {
             enemyHp -= 20;
             Debug.Log("enemy hp decrease");
+            if (enemyHp == 0)
+            {
+                isDead = true;
+                enemyAnimator.SetBool("Is_Death", true);
+                Invoke("DestroyEnemy", 3f);
+            }
         }
     }
 
