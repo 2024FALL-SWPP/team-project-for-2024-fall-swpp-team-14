@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Laser
+  - Laptop
+  - Server
   - Enemy
   layers:
   - Default
@@ -13,8 +15,8 @@ TagManager:
   - PostProcess
   - Water
   - UI
+  - interactable
   - Obstacle
-  - 
   - 
   - 
   - 
