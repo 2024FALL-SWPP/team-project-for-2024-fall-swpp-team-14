@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Laser
+  - Laptop
+  - Server
   - Enemy
   - DroneLaser
   layers:
@@ -14,8 +16,8 @@ TagManager:
   - PostProcess
   - Water
   - UI
+  - interactable
   - Obstacle
-  - 
   - 
   - 
   - 
