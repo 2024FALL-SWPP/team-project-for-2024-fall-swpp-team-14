@@ -8,6 +8,7 @@ TagManager:
   - Laptop
   - Server
   - Enemy
+  - DroneLaser
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - PostProcess
   - Water
   - UI
-  - interactable
   - Obstacle
+  - interactable
   - 
   - 
   - 

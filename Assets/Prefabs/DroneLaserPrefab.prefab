@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7562544710209327671}
   m_Layer: 0
   m_Name: DroneLaserPrefab
-  m_TagString: Laser
+  m_TagString: DroneLaser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,7 +55,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1630976601828381676}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.02139503, y: 0.020655056, z: 0.29872775}
