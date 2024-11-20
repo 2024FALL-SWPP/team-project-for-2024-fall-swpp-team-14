@@ -1,11 +1,11 @@
 # PR Title: 
 [Descriptive title summarizing the change]
 
+## PR Description
+- 추가하거나 수정한 백로그 번호와 간단한 설명
+
 ## Related Issue(s)
 Link or reference any related issues or tickets.
-
-## PR Description
-[Provide a brief summary of the changes made.]
 
 ### Changes Included
 - [ ] Added new feature(s)
@@ -20,10 +20,11 @@ Any specific instructions or points to be considered by the reviewer.
 
 ---
 ## Reviewer Checklist
-- [ ] Code is written in clean, maintainable, and idiomatic form.
-- [ ] Automated test coverage is adequate.
-- [ ] All existing tests pass.
-- [ ] Manual testing has been performed to ensure the PR works as expected. ] Code review comments have been addressed or clarified.
+- [ ] Code is written in clean and maintainable form.
+- [ ] All existing tests pass of previous features.
+- [ ] Manual testing of each backlog has been performed to ensure the PR works as expected.
+- [ ] Code review comments have been addressed or clarified.
+---
 
 ## Additional Comments
 Add any other comments or information that might be useful for the review process.
