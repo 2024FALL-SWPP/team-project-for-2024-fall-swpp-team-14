@@ -7,6 +7,7 @@ public class DroneController : MonoBehaviour
 
     private AudioSource playerAudio;
     public AudioClip shootLaserAudio;
+    public AudioClip AlertAudio;
     float horizontalInput;
     float verticalInput;
     float elevationInput;
@@ -24,6 +25,8 @@ public class DroneController : MonoBehaviour
     private Transform droneCamera;
     private bool canShoot = true;
     private bool controlEnabled = true;
+    private MainMapManager mainMapManager;
+    private bool isAlertPlayed = false;
 
     void Start()
     {
@@ -32,6 +35,8 @@ public class DroneController : MonoBehaviour
         originalRotation = aircraft.rotation;
         rb = GetComponent<Rigidbody>();
         droneCamera = transform.Find("Main Camera");
+        mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
+        isAlertPlayed = false;
     }
     void Update()
     {
@@ -58,6 +63,11 @@ public class DroneController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R))
             {
                 ReloadLaser();
+            }
+            if (mainMapManager.isServerActivated && !isAlertPlayed)
+            {
+                playerAudio.PlayOneShot(AlertAudio);
+                isAlertPlayed = true;
             }
         }
         UpdatePropellers();
