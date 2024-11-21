@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 public class DroneController : MonoBehaviour
 {
-    private int droneHp = 100;
+    public int droneHp = 100;
 
     private AudioSource playerAudio;
     public AudioClip shootLaserAudio;
@@ -32,7 +32,7 @@ public class DroneController : MonoBehaviour
     public enum DroneGameState { InGame, GameOver, MapClear };
 
     public DroneGameState droneGameState;
-
+    private float lastDamagedTimeByLaserObstacle = 0;
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
@@ -133,15 +133,33 @@ public class DroneController : MonoBehaviour
         if (droneGameState == DroneGameState.InGame)
         {
             if (other.CompareTag("Laser"))
-            { //if hit by enemy's laser, decrease HP
-                droneHp -= 10;
-                Debug.Log("drone hp decrease");
-                if (droneHp <= 0)
+            {
+                DroneGetDamaged(10);
+            }
+        }
+    }
+    void OnTriggerStay(Collider other)
+    {
+        if (droneGameState == DroneGameState.InGame)
+        {
+            if (other.CompareTag("LaserObstacle"))
+            {
+                if (Time.time - lastDamagedTimeByLaserObstacle > 0.5f)
                 {
-
-                    GameOver();
+                    DroneGetDamaged(10);
+                    lastDamagedTimeByLaserObstacle = Time.time;
                 }
             }
+        }
+    }
+
+    void DroneGetDamaged(int damage)
+    {
+        droneHp -= damage;
+        if (droneHp <= 0)
+        {
+
+            GameOver();
         }
     }
 
@@ -151,7 +169,7 @@ public class DroneController : MonoBehaviour
         droneDeathParticle.Play();
         rb.useGravity = true;
         rb.constraints = RigidbodyConstraints.None;
-        rb.AddForce(Vector3.up*3.0f, ForceMode.Impulse);
+        rb.AddForce(Vector3.up * 3.0f, ForceMode.Impulse);
         rb.AddTorque(new Vector3(Random.Range(-0.02f, 0.02f), Random.Range(-0.02f, 0.02f), Random.Range(-0.02f, 0.02f)), ForceMode.Impulse);
         droneGameState = DroneGameState.GameOver;
         droneUIManager.ShowGameOverScreen();
