@@ -9,6 +9,7 @@ TagManager:
   - Server
   - Enemy
   - DroneLaser
+  - LaserObstacle
   layers:
   - Default
   - TransparentFX
