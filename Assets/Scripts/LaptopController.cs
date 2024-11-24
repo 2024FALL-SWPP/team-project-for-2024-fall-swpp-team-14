@@ -9,6 +9,8 @@ public class LaptopController : InteractionController
     public TextMeshProUGUI passwordInput;
     public string passwordAnswer = "defaultPassword";
     private bool isInteractionDoing = false;
+    public GameObject enterPassword;
+    public GameObject passwordGuide;
 
     private KeyCode[] NumberkeyCodes =
     {
@@ -33,7 +35,10 @@ public class LaptopController : InteractionController
             {
                 if (Input.GetKeyDown(NumberkeyCodes[i]))
                 {
-                    passwordInput.text += "" + i;
+                    if (passwordInput.text.Length < 4)
+                    {
+                        passwordInput.text += "" + i;
+                    }
                 }
             }
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -55,6 +60,8 @@ public class LaptopController : InteractionController
                 passwordInput.text = "SUCCESS";
                 passwordInput.fontSize = 15;
                 passwordInput.color = Color.green;
+                enterPassword.SetActive(false);
+                passwordGuide.SetActive(false);
             }
         }
     }

@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 public class DroneController : MonoBehaviour
 {
-    private int droneHp = 100;
+    public int droneHp = 100;
 
     private AudioSource playerAudio;
     public AudioClip shootLaserAudio;
@@ -27,7 +28,14 @@ public class DroneController : MonoBehaviour
     private bool controlEnabled = true;
     private MainMapManager mainMapManager;
     private bool isAlertPlayed = false;
+    private DroneUIManager droneUIManager;
+    public AudioClip droneDeathAudio;
+    public ParticleSystem droneDeathParticle;
 
+    public enum DroneGameState { InGame, GameOver, MapClear };
+
+    public DroneGameState droneGameState;
+    private float lastDamagedTimeByLaserObstacle = 0;
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
@@ -37,12 +45,14 @@ public class DroneController : MonoBehaviour
         droneCamera = transform.Find("Main Camera");
         mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
         isAlertPlayed = false;
+        droneUIManager = GetComponent<DroneUIManager>();
+        droneGameState = DroneGameState.InGame;
+        droneUIManager.ShowInGameScreen();
     }
     void Update()
     {
-        if (controlEnabled)
+        if (controlEnabled && droneGameState == DroneGameState.InGame)
         {
-
             horizontalInput = Input.GetAxis("Horizontal");
             verticalInput = Input.GetAxis("Vertical");
             elevationInput = Input.GetAxis("Elevation");
@@ -78,13 +88,9 @@ public class DroneController : MonoBehaviour
         controlEnabled = true;
     }
 
-    public void DisableControl()
-    {
-        controlEnabled = false;
-    }
     void LateUpdate()
     {
-        if (controlEnabled)
+        if (controlEnabled && droneGameState == DroneGameState.InGame)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
@@ -134,10 +140,54 @@ public class DroneController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Laser"))
-        { //if hit by enemy's laser, decrease HP
-            droneHp -= 10;
-            Debug.Log("drone hp decrease");
+        if (droneGameState == DroneGameState.InGame)
+        {
+            if (other.CompareTag("Laser"))
+            {
+                DroneGetDamaged(10);
+            }
         }
+    }
+    void OnTriggerStay(Collider other)
+    {
+        if (droneGameState == DroneGameState.InGame)
+        {
+            if (other.CompareTag("LaserObstacle"))
+            {
+                if (Time.time - lastDamagedTimeByLaserObstacle > 0.5f)
+                {
+                    DroneGetDamaged(10);
+                    lastDamagedTimeByLaserObstacle = Time.time;
+                }
+            }
+        }
+    }
+
+    void DroneGetDamaged(int damage)
+    {
+        droneHp -= damage;
+        if (droneHp <= 0)
+        {
+
+            GameOver();
+        }
+    }
+
+    public void GameOver()
+    {
+        playerAudio.PlayOneShot(droneDeathAudio);
+        droneDeathParticle.Play();
+        rb.useGravity = true;
+        rb.constraints = RigidbodyConstraints.None;
+        rb.AddForce(Vector3.up * 3.0f, ForceMode.Impulse);
+        rb.AddTorque(new Vector3(Random.Range(-0.02f, 0.02f), Random.Range(-0.02f, 0.02f), Random.Range(-0.02f, 0.02f)), ForceMode.Impulse);
+        droneGameState = DroneGameState.GameOver;
+        droneUIManager.ShowGameOverScreen();
+    }
+
+    public void MapClear()
+    {
+        droneGameState = DroneGameState.MapClear;
+        droneUIManager.ShowMapClearScreen();
     }
 }
