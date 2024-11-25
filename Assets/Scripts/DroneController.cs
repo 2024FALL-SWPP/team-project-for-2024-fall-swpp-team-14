@@ -175,6 +175,9 @@ public class DroneController : MonoBehaviour
 
     public void GameOver()
     {
+        GameObject alert_red = GameObject.Find("Alert_Red");
+        alert_red.SetActive(false);
+        
         playerAudio.PlayOneShot(droneDeathAudio);
         droneDeathParticle.Play();
         rb.useGravity = true;
