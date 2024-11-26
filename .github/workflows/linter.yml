@@ -32,3 +32,4 @@ jobs:
           # To report GitHub Actions status checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FIX_CSHARP: true
+          FIX_MARKDOWN: true
