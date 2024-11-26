@@ -179,8 +179,8 @@ public class RiveScreen : MonoBehaviour
 
     private void Update()
     {
-        m_helper?.UpdateTextureHelper();
-        if (m_artboard == null)
+        m_helper?.UpdateTextureHelper(); //Ensures that the render texture associated with the camera is up-to-date
+        if (m_artboard == null) //If the m_artboard is null, the function exits early.
         {
             return;
         }
@@ -188,8 +188,8 @@ public class RiveScreen : MonoBehaviour
         Camera camera = gameObject.GetComponent<Camera>();
         if (camera != null)
         {
-            Vector3 mousePos = camera.ScreenToViewportPoint(Input.mousePosition);
-            Vector2 mouseRiveScreenPos = new Vector2(
+            Vector3 mousePos = camera.ScreenToViewportPoint(Input.mousePosition); //Converts current mouse position from screen space to viewport space
+            Vector2 mouseRiveScreenPos = new Vector2( //Map mouse position to the artboard's coordinate system using the viewport and camera dimensions.
                 mousePos.x * camera.pixelWidth,
                 (1 - mousePos.y) * camera.pixelHeight
             );
