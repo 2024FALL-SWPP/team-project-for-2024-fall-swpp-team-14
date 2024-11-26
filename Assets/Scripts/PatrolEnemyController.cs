@@ -19,6 +19,7 @@ public class PatrolEnemyController : MonoBehaviour
     private GameObject laserPrefab;
     private int alertState = 0;
     private Vector3 startPos, endPos, currentDest;
+    private MainMapManager mainMapManager;
     private int delayCount = 2;
 
     private bool returnToWork = false;
@@ -145,8 +146,11 @@ public class PatrolEnemyController : MonoBehaviour
 
     void AlertOne()
     {
+        if (alertState != 3)
+        {
+            alertState = 1;
+        }
         returnToWork = true;
-        alertState = 1;
         nmAgent.isStopped = false;
         animator.SetBool("Patrol", true);
         animator.SetBool("Is_Aiming", false);
@@ -156,7 +160,10 @@ public class PatrolEnemyController : MonoBehaviour
 
     void AlertTwo()
     {
-        alertState = 2;
+        if (alertState != 3)
+        {
+            alertState = 2;
+        }
         nmAgent.isStopped = true;
         animator.SetBool("Is_Aiming", true);
         Vector3 firePosition = transform.position + transform.up * 1.41f + transform.forward * 1.79f + transform.right * 0.21f;
@@ -174,6 +181,21 @@ public class PatrolEnemyController : MonoBehaviour
                 Instantiate(laserPrefab, firePosition, Quaternion.LookRotation(direction));
                 lastAttackTime = Time.time;
             }
+        }
+    }
+
+    void AlertThree()
+    {
+        alertState = 3;
+        playerPosition = player.transform;
+
+        if (IsVisible(playerPosition.position,10)) //if ((alertState >= 2 && IsVisible(playerPosition.position, 10)) || IsVisible(playerPosition.position, 8))
+        {
+            AlertTwo();
+        }
+        else
+        {
+            AlertOne();
         }
     }
 
@@ -195,6 +217,7 @@ public class PatrolEnemyController : MonoBehaviour
         delayCount = 2;
 
         enemyHealthManager = GetComponent<EnemyHealthManager>();
+        mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
     }
 
     // Update is called once per frame
@@ -210,7 +233,12 @@ public class PatrolEnemyController : MonoBehaviour
         }
         playerPosition = player.transform;
         initDistance = (initPosition - transform.position).magnitude;
-        if (IsVisible(playerPosition.position, 12))
+
+        if (mainMapManager.isServerActivated)
+        {
+            AlertThree();
+        }
+        else if (IsVisible(playerPosition.position, 12))
         {
             if ((alertState >= 2 && IsVisible(playerPosition.position, 10)) || IsVisible(playerPosition.position, 8))
             {

@@ -203,13 +203,16 @@ public class EnemyGenerator : MonoBehaviour
     public GameObject standingEnemyPrefab;
     public GameObject patrolEnemyPrefab;
     public GameObject enemyLaserPrefab;
-   public void EnemySetter(float initX, float initY, float initZ, float initYRot)
+    private MainMapManager mainMapManager;
+    public List<GameObject> enemyList = new List<GameObject>();
+    public GameObject EnemySetter(float initX, float initY, float initZ, float initYRot)
     {
         EnemyBuilder enemyBuilder = new EnemyBuilder();
         Enemy enemy = enemyBuilder.InitX(initX).InitY(initY).InitZ(initZ).InitYRot(initYRot).GetEnemy();
         GameObject enemyInstance = Instantiate(enemyPrefab, new Vector3(enemy.getInitX(), enemy.getInitY(), enemy.getInitZ()), Quaternion.Euler(0, enemy.getInitYRot(), 0));
+        return enemyInstance;
     }
-    public void WorkingEnemySetter(float initX, float initY, float initZ, float initYRot, float rangeX, float rangeZ, float speed)
+    public GameObject WorkingEnemySetter(float initX, float initY, float initZ, float initYRot, float rangeX, float rangeZ, float speed)
     {
         WorkingEnemyBuilder enemyBuilder = new WorkingEnemyBuilder();
         WorkingEnemy enemy = enemyBuilder.InitX(initX).InitY(initY).InitZ(initZ).InitYRot(initYRot).RangeX(rangeX).RangeZ(rangeZ).Speed(speed).GetEnemy();
@@ -223,8 +226,9 @@ public class EnemyGenerator : MonoBehaviour
         enemyController.setRangeZ(enemy.getRangeZ());
         enemyController.setSpeed(enemy.getSpeed());
         enemyController.setLaserPrefab(enemyLaserPrefab);
+        return enemyInstance;
     }
-    public void StandingEnemySetter(float initX, float initY, float initZ, float initYRot, float speed)
+    public GameObject StandingEnemySetter(float initX, float initY, float initZ, float initYRot, float speed)
     {
         StandingEnemyBuilder enemyBuilder = new StandingEnemyBuilder();
         StandingEnemy enemy = enemyBuilder.InitX(initX).InitY(initY).InitZ(initZ).InitYRot(initYRot).Speed(speed).GetEnemy();
@@ -236,8 +240,9 @@ public class EnemyGenerator : MonoBehaviour
         enemyController.setInitYRot(enemy.getInitYRot());
         enemyController.setSpeed(enemy.getSpeed());
         enemyController.setLaserPrefab(enemyLaserPrefab);
+        return enemyInstance;
     }
-    public void PatrolEnemySetter(float initX, float initY, float initZ, float initYRot, float rangeX, float rangeZ, float speed)
+    public GameObject PatrolEnemySetter(float initX, float initY, float initZ, float initYRot, float rangeX, float rangeZ, float speed)
     {
         PatrolEnemyBuilder enemyBuilder = new PatrolEnemyBuilder();
         PatrolEnemy enemy = enemyBuilder.InitX(initX).InitY(initY).InitZ(initZ).InitYRot(initYRot).RangeX(rangeX).RangeZ(rangeZ).Speed(speed).GetEnemy();
@@ -251,10 +256,12 @@ public class EnemyGenerator : MonoBehaviour
         enemyController.setRangeZ(enemy.getRangeZ());
         enemyController.setSpeed(enemy.getSpeed());
         enemyController.setLaserPrefab(enemyLaserPrefab);
+        return enemyInstance;
     }
     // Start is called before the first frame update
     void Start()
     {
+        mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
         //EnemySetter(60.82f, 2.1f, -5.93f, 90f);
         //WorkingEnemySetter(60.82f, 2.1f, -5.93f, 90f, 65.82f, -5.93f, 2f);
 
@@ -302,17 +309,33 @@ public class EnemyGenerator : MonoBehaviour
         StandingEnemySetter(38.99f, 9.8f, -10.131f, 0f, 2f);
 
         // 2층 서버실 옆 비활성화된 경비병 여섯
-        EnemySetter(46.332f, 9.8f, -12.508f, 90f);
-        EnemySetter(46.332f, 9.8f, -14.908f, 90f);
-        EnemySetter(47.489f, 9.8f, -16.33f, 0f);
-        EnemySetter(49.91f, 9.8f, -16.33f, 0f);
-        EnemySetter(51.221f, 9.8f, -14.897f, -90f);
-        EnemySetter(51.221f, 9.8f, -12.508f, -90f);
+        enemyList.Add(EnemySetter(46.332f, 9.8f, -12.508f, 90f));
+        enemyList.Add(EnemySetter(46.332f, 9.8f, -14.908f, 90f));
+        enemyList.Add(EnemySetter(47.489f, 9.8f, -16.33f, 0f));
+        enemyList.Add(EnemySetter(49.91f, 9.8f, -16.33f, 0f));
+        enemyList.Add(EnemySetter(51.221f, 9.8f, -14.897f, -90f));
+        enemyList.Add(EnemySetter(51.221f, 9.8f, -12.508f, -90f));
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (mainMapManager.isServerActivated)
+        {
+            for(int i = 0; i < enemyList.Count; i++)
+            {
+                if (enemyList[i] == null)
+                {
+                    continue;
+                }
+
+                Vector3 tempPos = enemyList[i].transform.position;
+                float tempYRot = enemyList[i].transform.rotation.y;
+
+                Destroy(enemyList[i]);
+                StandingEnemySetter(tempPos.x, tempPos.y, tempPos.z, tempYRot, 2f);
+            }
+            enemyList = new List<GameObject>();
+        }
     }
 }
