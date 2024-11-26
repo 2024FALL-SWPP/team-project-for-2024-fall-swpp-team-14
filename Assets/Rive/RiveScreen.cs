@@ -199,10 +199,19 @@ public class RiveScreen : MonoBehaviour
             switch (moveToMission.Value)
             {
                 case 1: //Tutorial Mission 1
+                    landPosition = new Vector3(11, 0, 6);
+                    landRotation = Quaternion.Euler(0, -90, 0);
+                    SceneManager.LoadSceneAsync("TutorialScene", LoadSceneMode.Single).completed += OnSceneLoaded;
                     break;
                 case 2: //Tutorial Mission2
+                    landPosition = new Vector3(6, -0.5f, -3);
+                    landRotation = Quaternion.Euler(0, 180, 0);
+                    SceneManager.LoadSceneAsync("TutorialScene", LoadSceneMode.Single).completed += OnSceneLoaded;
                     break;
                 case 3: //Tutorial Mission 3
+                    landPosition = new Vector3(3, 0, -7);
+                    landRotation = Quaternion.Euler(0, -90, 0);
+                    SceneManager.LoadSceneAsync("TutorialScene", LoadSceneMode.Single).completed += OnSceneLoaded;
                     break;
                 case 4: //MainMap Mission 1
                     landPosition = new Vector3(68, 2, 20);
@@ -211,8 +220,14 @@ public class RiveScreen : MonoBehaviour
 
                     break;
                 case 5: //MainMap Mission 2
+                    landPosition = new Vector3(55, 5, -13);
+                    landRotation = Quaternion.Euler(0, 0, 0);
+                    SceneManager.LoadSceneAsync("Map_v2", LoadSceneMode.Single).completed += OnSceneLoaded;
                     break;
                 case 6: //MainMap Mission 3
+                    landPosition = new Vector3(42, 11, -13);
+                    landRotation = Quaternion.Euler(0, 130, 0);
+                    SceneManager.LoadSceneAsync("Map_v2", LoadSceneMode.Single).completed += OnSceneLoaded;
                     break;
                 default:
                     break;
@@ -286,13 +301,25 @@ public class RiveScreen : MonoBehaviour
 
     private void OnSceneLoaded(AsyncOperation asyncOperation)
     {
-        // Find the drone object in the new scene
-        GameObject drone = GameObject.FindWithTag("Player"); // Replace "Drone" with your actual tag
+        GameObject drone = GameObject.FindWithTag("Player");
         if (drone != null)
         {
             drone.transform.position = landPosition;
             drone.transform.rotation = landRotation;
-            Debug.Log("Drone position and rotation updated.");
+            Transform aircraft = drone.transform.Find("Aircraft1");
+            if (aircraft != null)
+            {
+                // Reset the aircraft's local rotation
+                Quaternion desiredGlobalRotation = Quaternion.Euler(-90, -180, -90);
+
+                // Calculate the required local rotation for the aircraft
+                Quaternion parentGlobalRotation = drone.transform.rotation;
+                Quaternion requiredLocalRotation = Quaternion.Inverse(parentGlobalRotation) * desiredGlobalRotation;
+
+                // Set the aircraft's local rotation
+                aircraft.localRotation = requiredLocalRotation;
+            }
+
         }
         else
         {
