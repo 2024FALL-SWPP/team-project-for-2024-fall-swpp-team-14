@@ -92,14 +92,16 @@ public class RiveAnimationManager : MonoBehaviour
     public event RiveEventDelegate OnRiveEvent;
     public delegate void RiveEventDelegate(ReportedEvent reportedEvent);
 
-    private Rive.RenderQueue[] m_renderQueue = new Rive.RenderQueue[4];
-    private Rive.Renderer[] m_riveRenderer = new Rive.Renderer[4];
-    private CommandBuffer[] m_commandBuffer = new CommandBuffer[4];
+    private Rive.RenderQueue[] m_renderQueue = new Rive.RenderQueue[7];
+    private Rive.Renderer[] m_riveRenderer = new Rive.Renderer[7];
+    private CommandBuffer[] m_commandBuffer = new CommandBuffer[7];
 
-    private Rive.File[] m_file = new Rive.File[4];
-    private Artboard[] m_artboard = new Artboard[4];
-    private StateMachine[] m_stateMachine = new StateMachine[4];
-    private CameraTextureHelper[] m_helper = new CameraTextureHelper[4];
+    private Rive.File[] m_file = new Rive.File[7];
+    private Artboard[] m_artboard = new Artboard[7];
+    private StateMachine[] m_stateMachine = new StateMachine[7];
+    private CameraTextureHelper[] m_helper = new CameraTextureHelper[7];
+
+
 
     // public StateMachine stateMachine => m_stateMachine;
 
@@ -117,7 +119,7 @@ public class RiveAnimationManager : MonoBehaviour
 
     void OnGUI()
     {
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 7; i++){
             if (m_helper[i] != null && Event.current.type.Equals(EventType.Repaint))
             {
                 var texture = m_helper[i].renderTexture;
@@ -134,29 +136,13 @@ public class RiveAnimationManager : MonoBehaviour
 
             }
         }
-        // if (m_helper != null && Event.current.type.Equals(EventType.Repaint))
-        // {
-        //     var texture = m_helper.renderTexture;
-
-        //     var width = m_helper.camera.scaledPixelWidth;
-        //     var height = m_helper.camera.scaledPixelHeight;
-
-        //     GUI.DrawTexture(
-        //         flipY() ? new Rect(0, height, width, -height) : new Rect(0, 0, width, height),
-        //         texture,
-        //         ScaleMode.StretchToFill,
-        //         true
-        //     );
-
-        // }
-
     }
 
     private void Awake()
     {
         Camera camera = gameObject.GetComponent<Camera>();
         Assert.IsNotNull(camera, "RiveScreen must be attached to a camera.");
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 7; i++){
             if (asset_list[i] != null)
             {
                 m_file[i] = Rive.File.Load(asset_list[i]);
@@ -178,43 +164,26 @@ public class RiveAnimationManager : MonoBehaviour
 
             DrawRive(i);
         }
-        // if (asset_list[0] != null)
-        // {
-        //     m_file = Rive.File.Load(asset_list[0]);
-        //     m_artboard = m_file.Artboard(0);
-        //     m_stateMachine = m_artboard?.StateMachine();
-        // }
-
-        // Make a RenderQueue that doesn't have a backing texture and does not
-        // clear the target (we'll be drawing on top of it).
-        // m_renderQueue = new Rive.RenderQueue(null, false);
-        // m_riveRenderer = m_renderQueue.Renderer();
-        // m_commandBuffer = m_riveRenderer.ToCommandBuffer();
-
-        // if (!Rive.RenderQueue.supportsDrawingToScreen())
-        // {
-        //     m_helper = new CameraTextureHelper(camera, m_renderQueue);
-        //     m_commandBuffer.SetRenderTarget(m_helper.renderTexture);
-        // }
-        // camera.AddCommandBuffer(cameraEvent, m_commandBuffer);
-
-        // DrawRive(m_renderQueue);
     }
 
     void DrawRive(int i)
     {
-        // if (m_artboard == null)
-        // {
-        //     return;
-        // }
-        // m_riveRenderer.Align(fit, alignment ?? Alignment.Center, m_artboard);
-        // m_riveRenderer.Draw(m_artboard);
-
         if (m_artboard[i] == null)
         {
             return;
         }
-        m_riveRenderer[i].Align(fit, alignment ?? Alignment.Center, m_artboard[i]);
+        if (i == 4 || i == 5)
+        {
+            m_riveRenderer[i].Align(Fit.None, Alignment.TopRight, m_artboard[i]);
+        }
+        else if (i == 6)
+        {
+            m_riveRenderer[i].Align(Fit.None, Alignment.BottomRight, m_artboard[i]);
+        }
+        else
+        {
+            m_riveRenderer[i].Align(Fit.None, Alignment.TopLeft, m_artboard[i]);
+        }
         m_riveRenderer[i].Draw(m_artboard[i]);
     }
 
@@ -223,56 +192,26 @@ public class RiveAnimationManager : MonoBehaviour
 
     private void Update()
     {
-        SMITrigger someTrigger = m_stateMachine[3].GetTrigger("Is_Active");
-        if (someTrigger != null)
+        SMITrigger[] isActive = new SMITrigger[4];
+        SMITrigger[] isChecked = new SMITrigger[4];
+        for (int i = 0; i < 4; i++)
         {
-            someTrigger.Fire();
+            isActive[i] = m_stateMachine[i].GetTrigger("Is_Active");
+            isChecked[i] = m_stateMachine[i].GetTrigger("Is_Checked");
         }
-        someTrigger = m_stateMachine[3].GetTrigger("Is_Checked");
-        if (someTrigger != null)
-        {
-            someTrigger.Fire();
-        }
-        // Debug.Log(Time.time);
-        // if (Time.time > 1.0f && Time.time < 4.0f && !isfired)
-        // {
-        //     m_file = Rive.File.Load(asset_list[0]);
-        //     m_artboard = m_file.Artboard(0);
-        //     m_stateMachine = m_artboard?.StateMachine();
-        //     SMITrigger someTrigger = m_stateMachine.GetTrigger("Is_Active");
-        //     someTrigger.Fire();
-        //     m_stateMachine?.Advance(Time.deltaTime);
-        //     isfired = true;
-        // }
-        // else if (Time.time >= 4.0f && Time.time < 6.0f)
-        // {
-        //     m_file = Rive.File.Load(asset_list[0]);
-        //     m_artboard = m_file.Artboard(0);
-        //     m_stateMachine = m_artboard?.StateMachine();
-        //     SMITrigger someTrigger = m_stateMachine.GetTrigger("Is_Checked");
-        //     m_stateMachine?.Advance(Time.deltaTime);
-        //     someTrigger.Fire();
-        // }
-        // else if (Time.time >= 6.0f && Time.time < 10.0f)
-        // {
-        //     m_file = Rive.File.Load(asset_list[1]);
-        //     m_artboard = m_file.Artboard(0);
-        //     m_stateMachine = m_artboard?.StateMachine();
-        //     SMITrigger someTrigger = m_stateMachine.GetTrigger("Is_Active");
-        //     m_stateMachine?.Advance(Time.deltaTime);
-        //     someTrigger.Fire();
-        // }
+        SMINumber alertCount = m_stateMachine[4].GetNumber("Alert_count");
+        SMINumber hp = m_stateMachine[5].GetNumber("hp");
+        SMINumber ammo = m_stateMachine[6].GetNumber("ammo");
 
-        // m_helper?.UpdateTextureHelper();
-        // if (m_artboard == null)
-        // {
-        //     return;
-        // }
+        isActive[3].Fire();
+        alertCount.Value = 1;
+        hp.Value = 35 / 10;
+        ammo.Value = 20;
 
         Camera camera = gameObject.GetComponent<Camera>();
         if (camera != null)
         {
-            for (int i = 0; i < 4; i++){
+            for (int i = 0; i < 7; i++){
                 m_helper[i]?.UpdateTextureHelper();
                 if (m_artboard == null)
                 {
@@ -319,74 +258,26 @@ public class RiveAnimationManager : MonoBehaviour
 
                 m_stateMachine[i]?.Advance(Time.deltaTime);
             }
-            // Vector3 mousePos = camera.ScreenToViewportPoint(Input.mousePosition);
-            // Vector2 mouseRiveScreenPos = new Vector2(
-            //     mousePos.x * camera.pixelWidth,
-            //     (1 - mousePos.y) * camera.pixelHeight
-            // );
-            // if (m_lastMousePosition != mouseRiveScreenPos)
-            // {
-            //     Vector2 local = m_artboard.LocalCoordinate(
-            //         mouseRiveScreenPos,
-            //         new Rect(0, 0, camera.pixelWidth, camera.pixelHeight),
-            //         fit,
-            //         alignment
-            //     );
-            //     m_stateMachine?.PointerMove(local);
-            //     m_lastMousePosition = mouseRiveScreenPos;
-            // }
-            // if (Input.GetMouseButtonDown(0))
-            // {
-            //     Vector2 local = m_artboard.LocalCoordinate(
-            //         mouseRiveScreenPos,
-            //         new Rect(0, 0, camera.pixelWidth, camera.pixelHeight),
-            //         fit,
-            //         alignment
-            //     );
-            //     m_stateMachine?.PointerDown(local);
-            //     m_wasMouseDown = true;
-            // }
-            // else if (m_wasMouseDown)
-            // {
-            //     m_wasMouseDown = false;
-            //     Vector2 local = m_artboard.LocalCoordinate(
-            //         mouseRiveScreenPos,
-            //         new Rect(0, 0, camera.pixelWidth, camera.pixelHeight),
-            //         fit,
-            //         alignment
-            //     );
-            //     m_stateMachine?.PointerUp(local);
-            // }
-
-            // m_stateMachine?.Advance(Time.deltaTime);
         }
 
         // Find reported Rive events before calling advance.
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 7; i++){
             foreach (var report in m_stateMachine[i]?.ReportedEvents() ?? Enumerable.Empty<ReportedEvent>())
             {
                 OnRiveEvent?.Invoke(report);
             }
         }
-        // foreach (var report in m_stateMachine?.ReportedEvents() ?? Enumerable.Empty<ReportedEvent>())
-        // {
-        //     OnRiveEvent?.Invoke(report);
-        // }
     }
 
     private void OnDisable()
     {
         Camera camera = gameObject.GetComponent<Camera>();
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 7; i++){
             if (m_commandBuffer[i] != null && camera != null)
             {
                 camera.RemoveCommandBuffer(cameraEvent, m_commandBuffer[i]);
             }
         }
-        // if (m_commandBuffer != null && camera != null)
-        // {
-        //     camera.RemoveCommandBuffer(cameraEvent, m_commandBuffer);
-        // }
 
     }
 }

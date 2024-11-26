@@ -15641,6 +15641,9 @@ MonoBehaviour:
   - {fileID: -4516626237390682484, guid: c9af5d7751116b24fbdb51da652722f6, type: 3}
   - {fileID: -4516626237390682484, guid: 3a00045df571ac747932fa0b024ff808, type: 3}
   - {fileID: -4516626237390682484, guid: 2cee8d12aedbd1b4e8f961d1f106d02e, type: 3}
+  - {fileID: -4516626237390682484, guid: 2a889b30a452d194b9fef89df42f0d08, type: 3}
+  - {fileID: -4516626237390682484, guid: ffd37691bda14584c814b1c8c5022a36, type: 3}
+  - {fileID: -4516626237390682484, guid: 1219863ee508b6b459680f8e1c3f535f, type: 3}
   cameraEvent: 20
   fit: 1
 --- !u!20 &440277983
