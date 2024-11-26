@@ -13,7 +13,14 @@ public class ServerController : InteractionController
 
     void Start()
     {
-        mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
+        if (GameObject.Find("MainMapManager") != null)
+        {
+            mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
+        }
+        else
+        {
+            mainMapManager = null;
+        }    
     }
 
     public override void StartInteraction()
@@ -21,7 +28,11 @@ public class ServerController : InteractionController
         Debug.Log("Server interaction succeed");
         isInteractionSuccessful = true;
         interactionManager.ExitInteraction(true);
-        mainMapManager.isServerActivated = true;
+
+        if (mainMapManager != null)
+        {
+            mainMapManager.isServerActivated = true;
+        }
     }
 
 }

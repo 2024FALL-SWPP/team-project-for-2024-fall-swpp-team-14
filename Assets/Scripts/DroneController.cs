@@ -43,7 +43,16 @@ public class DroneController : MonoBehaviour
         originalRotation = aircraft.rotation;
         rb = GetComponent<Rigidbody>();
         droneCamera = transform.Find("Main Camera");
-        mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
+
+        if (GameObject.Find("MainMapManager") != null)
+        {
+            mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
+        }
+        else
+        {
+            mainMapManager = null;
+        }
+        
         isAlertPlayed = false;
         droneUIManager = GetComponent<DroneUIManager>();
         droneGameState = DroneGameState.InGame;
@@ -74,7 +83,7 @@ public class DroneController : MonoBehaviour
             {
                 ReloadLaser();
             }
-            if (mainMapManager.isServerActivated && !isAlertPlayed)
+            if (mainMapManager != null && mainMapManager.isServerActivated && !isAlertPlayed)
             {
                 playerAudio.PlayOneShot(AlertAudio);
                 isAlertPlayed = true;
@@ -176,7 +185,10 @@ public class DroneController : MonoBehaviour
     public void GameOver()
     {
         GameObject alert_red = GameObject.Find("Alert_Red");
-        alert_red.SetActive(false);
+        if (alert_red != null)
+        {
+            alert_red.SetActive(false);
+        }
         
         playerAudio.PlayOneShot(droneDeathAudio);
         droneDeathParticle.Play();
