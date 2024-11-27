@@ -17,9 +17,17 @@ public class EnemyLaserController : MonoBehaviour
         transform.Translate(Vector3.forward * Time.deltaTime * enemyLaserSpeed);
     }
 
-    void OnCollisionEnter(Collision collision)
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     if (!collision.gameObject.CompareTag("Enemy") && !collision.gameObject.CompareTag("Laser"))
+    //     {
+    //         Destroy(gameObject);
+    //     }
+    // }
+
+    void OnTriggerEnter(Collider collider)
     {
-        if (!collision.gameObject.CompareTag("Enemy") && !collision.gameObject.CompareTag("Laser"))
+        if (!collider.gameObject.CompareTag("Enemy") && !collider.gameObject.CompareTag("Laser"))
         {
             Destroy(gameObject);
         }
