@@ -6,80 +6,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Rendering;
 
-internal class CameraTextureHelper
-{
-    private Camera m_camera;
-    private RenderTexture m_renderTexture;
-    private int m_pixelWidth = -1;
-    private int m_pixelHeight = -1;
-    private Rive.RenderQueue m_renderQueue;
-
-    // Queue to keep things on the main thread only.
-    private static ConcurrentQueue<Action> mainThreadActions = new ConcurrentQueue<Action>();
-
-    public RenderTexture renderTexture
-    {
-        get { return m_renderTexture; }
-    }
-
-    public Camera camera
-    {
-        get { return m_camera; }
-    }
-
-    internal CameraTextureHelper(Camera camera, Rive.RenderQueue queue)
-    {
-        m_camera = camera;
-        m_renderQueue = queue;
-        UpdateTextureHelper();
-    }
-
-    ~CameraTextureHelper()
-    {
-        // Since the GC calls the destructor and doesn't run on the main thread,
-        // we need to ensure the cleanup() call happens on the main thread.
-        mainThreadActions.Enqueue(() => Cleanup());
-    }
-
-    void Cleanup()
-    {
-        if (m_renderTexture != null)
-        {
-            m_renderTexture.Release();
-        }
-    }
-
-    private void Update()
-    {
-        // Process main thread actions
-        while (mainThreadActions.TryDequeue(out var action))
-        {
-            action();
-        }
-    }
-
-    public bool UpdateTextureHelper()
-    {
-
-        if (m_pixelWidth == m_camera.pixelWidth && m_pixelHeight == m_camera.pixelHeight)
-        {
-            return false;
-        }
-
-        Cleanup();
-
-        m_pixelWidth = m_camera.pixelWidth;
-        m_pixelHeight = m_camera.pixelHeight;
-        var textureDescriptor = TextureHelper.Descriptor(m_pixelWidth, m_pixelHeight);
-        m_renderTexture = new RenderTexture(textureDescriptor);
-        m_renderTexture.Create();
-        m_renderQueue.UpdateTexture(m_renderTexture);
-
-        return true;
-    }
-
-}
-
 [ExecuteInEditMode]
 [RequireComponent(typeof(Camera))]
 // Draw a Rive artboard to the screen. Must be bound to a camera.
@@ -101,6 +27,18 @@ public class RiveAnimationManager : MonoBehaviour
     private StateMachine[] m_stateMachine = new StateMachine[7];
     private CameraTextureHelper[] m_helper = new CameraTextureHelper[7];
 
+    public GameObject player;
+    private DroneController droneController;
+    private GameObject EnemyGenerator;
+    private int maxAlert;
+
+    SMITrigger[] isActive = new SMITrigger[4];
+    SMITrigger[] isChecked = new SMITrigger[4];
+    public SMINumber alertCount;
+    public SMINumber hp;
+    public SMINumber ammo;
+
+    public bool[] isMainMapMissionCleared = new bool[4] { false, false, false, false };
 
 
     // public StateMachine stateMachine => m_stateMachine;
@@ -140,6 +78,7 @@ public class RiveAnimationManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Awake");
         Camera camera = gameObject.GetComponent<Camera>();
         Assert.IsNotNull(camera, "RiveScreen must be attached to a camera.");
         for (int i = 0; i < 7; i++){
@@ -192,22 +131,22 @@ public class RiveAnimationManager : MonoBehaviour
 
     private void Update()
     {
-        SMITrigger[] isActive = new SMITrigger[4];
-        SMITrigger[] isChecked = new SMITrigger[4];
+        player = GameObject.FindWithTag("Player");
+        EnemyGenerator = GameObject.Find("EnemyGenerator");
         for (int i = 0; i < 4; i++)
         {
             isActive[i] = m_stateMachine[i].GetTrigger("Is_Active");
             isChecked[i] = m_stateMachine[i].GetTrigger("Is_Checked");
         }
-        SMINumber alertCount = m_stateMachine[4].GetNumber("Alert_count");
-        SMINumber hp = m_stateMachine[5].GetNumber("hp");
-        SMINumber ammo = m_stateMachine[6].GetNumber("ammo");
-
+        alertCount = m_stateMachine[4].GetNumber("Alert_count");
+        hp = m_stateMachine[5].GetNumber("hp");
+        ammo = m_stateMachine[6].GetNumber("ammo");
+        droneController = player.GetComponent<DroneController>();
+        maxAlert = EnemyGenerator.GetComponent<EnemyGenerator>().maxAlert;
         isActive[3].Fire();
-        alertCount.Value = 1;
-        hp.Value = 35 / 10;
-        ammo.Value = 20;
-
+        alertCount.Value = maxAlert;
+        hp.Value = (int)(droneController.droneHp / 10);
+        ammo.Value = droneController.currentReloadCnt;
         Camera camera = gameObject.GetComponent<Camera>();
         if (camera != null)
         {
@@ -269,6 +208,11 @@ public class RiveAnimationManager : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        
+    }
+
     private void OnDisable()
     {
         Camera camera = gameObject.GetComponent<Camera>();
@@ -278,6 +222,5 @@ public class RiveAnimationManager : MonoBehaviour
                 camera.RemoveCommandBuffer(cameraEvent, m_commandBuffer[i]);
             }
         }
-
     }
 }

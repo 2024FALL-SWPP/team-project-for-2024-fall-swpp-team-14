@@ -17,7 +17,7 @@ public class WorkingEnemyController : MonoBehaviour
     private Vector3 initPosition;
     public float initDistance;
     private GameObject laserPrefab;
-    private int alertState = 0;
+    public int alertState = 0;
     private Vector3 startPos, endPos, currentDest;
     private MainMapManager mainMapManager;
     private bool returnToWork = false;
@@ -228,7 +228,15 @@ public class WorkingEnemyController : MonoBehaviour
         delayCount = 2;
 
         enemyHealthManager = GetComponent<EnemyHealthManager>();
-        mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
+
+        if (GameObject.Find("MainMapManager") != null)
+        {
+            mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
+        }
+        else
+        {
+            mainMapManager = null;
+        }
     }
 
     // Update is called once per frame
@@ -246,7 +254,7 @@ public class WorkingEnemyController : MonoBehaviour
         playerPosition = player.transform;
         initDistance = (initPosition - transform.position).magnitude;
 
-        if (mainMapManager.isServerActivated)
+        if (mainMapManager != null && mainMapManager.isServerActivated)
         {
             AlertThree();
         }

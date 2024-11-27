@@ -7,7 +7,7 @@ public class StandingEnemyController : MonoBehaviour
     public GameObject player;
     public Transform playerPosition;
     public float initX, initY, initZ, initYRot;
-    public float rangeX, rangeZ, speed;
+    public float speed;
     private Animator animator;
     private Vector3 direction;
     private LayerMask obstacleLayerMask = 1 << 6;
@@ -16,8 +16,8 @@ public class StandingEnemyController : MonoBehaviour
     private float lastAttackTime;
     private Vector3 initPosition;
     public float initDistance;
-    private GameObject laserPrefab;
-    private int alertState = 0;
+    public GameObject laserPrefab;
+    public int alertState = 0;
     private int delayCount = 2;
     private MainMapManager mainMapManager;
     private EnemyHealthManager enemyHealthManager;
@@ -73,7 +73,6 @@ public class StandingEnemyController : MonoBehaviour
         Vector3 headPosition = transform.position + Vector3.up * 2;
         Vector3 direction = toPosition - headPosition;
         float distance = direction.magnitude;
-
         if (distance > distanceLimit)
         {
             return false;
@@ -102,7 +101,15 @@ public class StandingEnemyController : MonoBehaviour
         alertState = 0;
         delayCount = 2;
         enemyHealthManager = GetComponent<EnemyHealthManager>();
-        mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
+        
+        if (GameObject.Find("MainMapManager") != null)
+        {
+            mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
+        }
+        else
+        {
+            mainMapManager = null;
+        }
     }
 
     void AlertZero()
@@ -192,12 +199,13 @@ public class StandingEnemyController : MonoBehaviour
         playerPosition = player.transform;
         initDistance = (initPosition - transform.position).magnitude;
 
-        if (mainMapManager.isServerActivated)
+        if (mainMapManager != null && mainMapManager.isServerActivated)
         {
             AlertThree();
         }
         else if (IsVisible(playerPosition.position, 12))
         {
+            Debug.Log("Player is visible");
             if ((alertState >= 2 && IsVisible(playerPosition.position, 10)) || IsVisible(playerPosition.position, 8))
             {
                 AlertTwo();

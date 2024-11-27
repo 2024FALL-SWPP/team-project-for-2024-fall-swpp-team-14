@@ -15,6 +15,8 @@ public class InteractionManager : MonoBehaviour
     private bool isInteracting = false;
     Camera laptopCamera;
     private DroneUIManager droneUIManager;
+    
+    private RiveAnimationManager riveAnimationManager;
 
     private void Awake()
     {
@@ -27,6 +29,18 @@ public class InteractionManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        if (GameObject.Find("RiveAnimationManager") != null)
+        {
+            riveAnimationManager = GameObject.Find("RiveAnimationManager").GetComponent<RiveAnimationManager>();
+        }
+        else
+        {
+            riveAnimationManager = null;
         }
     }
 
@@ -73,6 +87,10 @@ public class InteractionManager : MonoBehaviour
                         if (Input.GetKeyDown(KeyCode.F))
                         {
                             serverController.StartInteraction();
+                            if (riveAnimationManager != null)
+                            {
+                                riveAnimationManager.isMainMapMissionCleared[2] = true;
+                            }
                         }
                     }
                     else
@@ -106,6 +124,10 @@ public class InteractionManager : MonoBehaviour
         if (succeed)
         {
             droneUIManager.HidePressInteractionImage();
+            if (riveAnimationManager != null)
+            {
+                riveAnimationManager.isMainMapMissionCleared[1] = true;
+            }
         }
     }
 
