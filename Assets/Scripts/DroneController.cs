@@ -135,6 +135,7 @@ public class DroneController : MonoBehaviour
         {
             if (other.CompareTag("Laser"))
             {
+                playerAudio.PlayOneShot(droneDamageAudio);
                 DroneGetDamaged(10);
             }
         }
@@ -145,6 +146,7 @@ public class DroneController : MonoBehaviour
         {
             if (other.CompareTag("LaserObstacle"))
             {
+                playerAudio.PlayOneShot(droneDamageAudio);
                 if (Time.time - lastDamagedTimeByLaserObstacle > 0.5f)
                 {
                     DroneGetDamaged(10);
@@ -157,7 +159,6 @@ public class DroneController : MonoBehaviour
     void DroneGetDamaged(int damage)
     {
         droneHp -= damage;
-        playerAudio.PlayOneShot(droneDamageAudio);
 
         if (droneHp <= 0)
         {

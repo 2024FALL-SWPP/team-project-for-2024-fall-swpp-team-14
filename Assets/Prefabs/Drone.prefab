@@ -662,7 +662,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   droneHp: 100
-  shootLaserAudio: {fileID: 8300000, guid: 703a1b7d0d326461d8868a21106fb1a9, type: 3}
+  shootLaserAudio: {fileID: 8300000, guid: 6005bbd04d6f74702836298ab14d7854, type: 3}
   droneSpeed: 3
   propellers:
   - {fileID: 5397014911308358619}
