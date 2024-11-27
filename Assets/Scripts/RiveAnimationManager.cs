@@ -40,6 +40,9 @@ public class RiveAnimationManager : MonoBehaviour
 
     public bool[] isMainMapMissionCleared = new bool[4] { false, false, false, false };
 
+    int currentMission = 0;
+    float missionChangedTime = -1f;
+
 
     // public StateMachine stateMachine => m_stateMachine;
 
@@ -78,7 +81,10 @@ public class RiveAnimationManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Awake");
+        while (currentMission < 4 && isMainMapMissionCleared[currentMission])
+        {
+            currentMission++;
+        }
         Camera camera = gameObject.GetComponent<Camera>();
         Assert.IsNotNull(camera, "RiveScreen must be attached to a camera.");
         for (int i = 0; i < 7; i++){
@@ -103,6 +109,7 @@ public class RiveAnimationManager : MonoBehaviour
 
             DrawRive(i);
         }
+        m_stateMachine[currentMission].GetTrigger("Is_Active").Fire();
     }
 
     void DrawRive(int i)
@@ -143,7 +150,22 @@ public class RiveAnimationManager : MonoBehaviour
         ammo = m_stateMachine[6].GetNumber("ammo");
         droneController = player.GetComponent<DroneController>();
         maxAlert = EnemyGenerator.GetComponent<EnemyGenerator>().maxAlert;
-        isActive[3].Fire();
+
+        if (currentMission < 4 && isMainMapMissionCleared[currentMission])
+        {
+            m_stateMachine[currentMission].GetTrigger("Is_Checked").Fire();
+            if (missionChangedTime == -1f)
+            {
+                missionChangedTime = Time.time;
+            }
+            if (currentMission < 3 && missionChangedTime + 2f < Time.time)
+            {
+                m_stateMachine[currentMission + 1].GetTrigger("Is_Active").Fire();
+                missionChangedTime = -1f;
+                currentMission++;
+            }
+        }
+
         alertCount.Value = maxAlert;
         hp.Value = (int)(droneController.droneHp / 10);
         ammo.Value = droneController.currentReloadCnt;

@@ -17,6 +17,7 @@ public class InteractionManager : MonoBehaviour
     private DroneUIManager droneUIManager;
     
     private RiveAnimationManager riveAnimationManager;
+    private Renderer droneRenderer;
 
     private void Awake()
     {
@@ -69,7 +70,8 @@ public class InteractionManager : MonoBehaviour
                             labtopController.StartInteraction();
                             laptopCamera = hit.collider.gameObject.transform.Find("LaptopCamera").GetComponent<Camera>();
                             laptopCamera.enabled = true;
-                            drone.SetActive(false);
+                            // drone.SetActive(false);
+                            droneRenderer.enabled = false;
                         }
 
                     }
@@ -119,7 +121,8 @@ public class InteractionManager : MonoBehaviour
             laptopCamera.enabled = false;
         }
 
-        drone.SetActive(true);
+        // drone.SetActive(true);
+        droneRenderer.enabled = true;
         droneController.EnableControl();
         if (succeed)
         {
@@ -152,6 +155,7 @@ public class InteractionManager : MonoBehaviour
         drone = GameObject.Find("Drone");
         droneController = drone.GetComponent<DroneController>();
         droneUIManager = drone.GetComponent<DroneUIManager>();
+        droneRenderer = GameObject.Find("Aircraft1").GetComponent<Renderer>();
     }
 
     public Camera GetMainCamera()
