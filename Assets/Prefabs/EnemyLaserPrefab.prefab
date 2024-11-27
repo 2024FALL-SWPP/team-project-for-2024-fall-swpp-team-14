@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b57c04eae2b574c8009a4f02588fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyShootLaserAudio: {fileID: 8300000, guid: 8b6ee9c31b0024944a4b70127acde35d, type: 3}
 --- !u!65 &8085485002397491977
 BoxCollider:
   m_ObjectHideFlags: 0
