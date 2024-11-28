@@ -8,6 +8,7 @@ public class DroneController : MonoBehaviour
 
     private AudioSource playerAudio;
     public AudioClip shootLaserAudio;
+    public AudioClip AlertAudio;
     float horizontalInput;
     float verticalInput;
     float elevationInput;
@@ -25,6 +26,8 @@ public class DroneController : MonoBehaviour
     private Transform droneCamera;
     private bool canShoot = true;
     private bool controlEnabled = true;
+    private MainMapManager mainMapManager;
+    private bool isAlertPlayed = false;
     private DroneUIManager droneUIManager;
     public AudioClip droneDeathAudio;
     public AudioClip droneDamageAudio;
@@ -41,6 +44,17 @@ public class DroneController : MonoBehaviour
         originalRotation = aircraft.rotation;
         rb = GetComponent<Rigidbody>();
         droneCamera = transform.Find("Main Camera");
+
+        if (GameObject.Find("MainMapManager") != null)
+        {
+            mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
+        }
+        else
+        {
+            mainMapManager = null;
+        }
+        
+        isAlertPlayed = false;
         droneUIManager = GetComponent<DroneUIManager>();
         droneGameState = DroneGameState.InGame;
         droneUIManager.ShowInGameScreen();
@@ -69,6 +83,11 @@ public class DroneController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R))
             {
                 ReloadLaser();
+            }
+            if (mainMapManager != null && mainMapManager.isServerActivated && !isAlertPlayed)
+            {
+                playerAudio.PlayOneShot(AlertAudio);
+                isAlertPlayed = true;
             }
         }
         UpdatePropellers();
@@ -169,6 +188,12 @@ public class DroneController : MonoBehaviour
 
     public void GameOver()
     {
+        GameObject alert_red = GameObject.Find("Alert_Red");
+        if (alert_red != null)
+        {
+            alert_red.SetActive(false);
+        }
+        
         playerAudio.PlayOneShot(droneDeathAudio);
         droneDeathParticle.Play();
         rb.useGravity = true;
