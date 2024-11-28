@@ -109,6 +109,11 @@ public class DroneController : MonoBehaviour
         controlEnabled = true;
     }
 
+    public void DisableControl()
+    {
+        controlEnabled = false;
+    }
+
     void LateUpdate()
     {
         if (controlEnabled && droneGameState == DroneGameState.InGame)

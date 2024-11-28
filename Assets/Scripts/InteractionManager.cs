@@ -72,6 +72,7 @@ public class InteractionManager : MonoBehaviour
                             laptopCamera.enabled = true;
                             // drone.SetActive(false);
                             droneRenderer.enabled = false;
+                            droneController.DisableControl();
                         }
 
                     }
