@@ -15,6 +15,9 @@ public class InteractionManager : MonoBehaviour
     private bool isInteracting = false;
     Camera laptopCamera;
     private DroneUIManager droneUIManager;
+    
+    private RiveAnimationManager riveAnimationManager;
+    private Renderer droneRenderer;
 
     private void Awake()
     {
@@ -27,6 +30,18 @@ public class InteractionManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        if (GameObject.Find("RiveAnimationManager") != null)
+        {
+            riveAnimationManager = GameObject.Find("RiveAnimationManager").GetComponent<RiveAnimationManager>();
+        }
+        else
+        {
+            riveAnimationManager = null;
         }
     }
 
@@ -55,7 +70,9 @@ public class InteractionManager : MonoBehaviour
                             labtopController.StartInteraction();
                             laptopCamera = hit.collider.gameObject.transform.Find("LaptopCamera").GetComponent<Camera>();
                             laptopCamera.enabled = true;
-                            drone.SetActive(false);
+                            // drone.SetActive(false);
+                            droneRenderer.enabled = false;
+                            droneController.DisableControl();
                         }
 
                     }
@@ -73,6 +90,10 @@ public class InteractionManager : MonoBehaviour
                         if (Input.GetKeyDown(KeyCode.F))
                         {
                             serverController.StartInteraction();
+                            if (riveAnimationManager != null)
+                            {
+                                riveAnimationManager.isMainMapMissionCleared[2] = true;
+                            }
                         }
                     }
                     else
@@ -101,11 +122,16 @@ public class InteractionManager : MonoBehaviour
             laptopCamera.enabled = false;
         }
 
-        drone.SetActive(true);
+        // drone.SetActive(true);
+        droneRenderer.enabled = true;
         droneController.EnableControl();
         if (succeed)
         {
             droneUIManager.HidePressInteractionImage();
+            if (riveAnimationManager != null)
+            {
+                riveAnimationManager.isMainMapMissionCleared[1] = true;
+            }
         }
     }
 
@@ -130,6 +156,7 @@ public class InteractionManager : MonoBehaviour
         drone = GameObject.Find("Drone");
         droneController = drone.GetComponent<DroneController>();
         droneUIManager = drone.GetComponent<DroneUIManager>();
+        droneRenderer = GameObject.Find("Aircraft1").GetComponent<Renderer>();
     }
 
     public Camera GetMainCamera()

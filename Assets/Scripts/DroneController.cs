@@ -37,6 +37,9 @@ public class DroneController : MonoBehaviour
 
     public DroneGameState droneGameState;
     private float lastDamagedTimeByLaserObstacle = 0;
+
+    private RiveAnimationManager riveAnimationManager;
+
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
@@ -58,6 +61,15 @@ public class DroneController : MonoBehaviour
         droneUIManager = GetComponent<DroneUIManager>();
         droneGameState = DroneGameState.InGame;
         droneUIManager.ShowInGameScreen();
+
+        if (GameObject.Find("RiveAnimationManager") != null)
+        {
+            riveAnimationManager = GameObject.Find("RiveAnimationManager").GetComponent<RiveAnimationManager>();
+        }
+        else
+        {
+            riveAnimationManager = null;
+        }
     }
     void Update()
     {
@@ -96,6 +108,11 @@ public class DroneController : MonoBehaviour
     public void EnableControl()
     {
         controlEnabled = true;
+    }
+
+    public void DisableControl()
+    {
+        controlEnabled = false;
     }
 
     void LateUpdate()
@@ -155,6 +172,14 @@ public class DroneController : MonoBehaviour
             if (other.CompareTag("Laser"))
             {
                 DroneGetDamaged(10);
+            }
+            else if (riveAnimationManager != null && other.CompareTag("Mission_01"))
+            {
+                riveAnimationManager.isMainMapMissionCleared[0] = true;
+            }
+            else if (riveAnimationManager != null && other.CompareTag("Mission_04"))
+            {
+                riveAnimationManager.isMainMapMissionCleared[3] = true;
             }
         }
     }

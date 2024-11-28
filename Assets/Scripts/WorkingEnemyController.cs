@@ -17,13 +17,15 @@ public class WorkingEnemyController : MonoBehaviour
     private Vector3 initPosition;
     public float initDistance;
     private GameObject laserPrefab;
-    private int alertState = 0;
+    public int alertState = 0;
     private Vector3 startPos, endPos, currentDest;
     private MainMapManager mainMapManager;
     private bool returnToWork = false;
     private int delayCount = 2;
 
     private EnemyHealthManager enemyHealthManager;
+    private float AimAngle;
+    private Vector3 firePosition;
 
     public void setInitX(float initx)
     {
@@ -91,6 +93,9 @@ public class WorkingEnemyController : MonoBehaviour
         Vector3 headPosition = transform.position + Vector3.up * 2;
         Vector3 direction = toPosition - headPosition;
         float distance = direction.magnitude;
+
+        AimAngle = 90.0f - Vector3.Angle(direction, transform.up);
+        animator.SetFloat("Aim_Angle", AimAngle);
 
         if (distance > distanceLimit)
         {
@@ -175,7 +180,20 @@ public class WorkingEnemyController : MonoBehaviour
         }
         nmAgent.isStopped = true;
         animator.SetBool("Is_Aiming", true);
-        Vector3 firePosition = transform.position + transform.up * 1.41f + transform.forward * 1.79f + transform.right * 0.21f;
+
+        if (AimAngle > 15)
+        {
+            firePosition = transform.position + transform.up * 2.3f + transform.forward * 1.41f + transform.right * 0.35f;
+        }
+        else if (AimAngle < 15 && AimAngle > -25)
+        {
+            firePosition = transform.position + transform.up * 1.41f + transform.forward * 1.79f + transform.right * 0.21f;
+        }
+        else if (AimAngle < -25)
+        {
+            firePosition = transform.position + transform.up * 0.35f + transform.forward * 1.3f + transform.right * (-0.09f);
+        }
+
         direction = playerPosition.position - firePosition;
         transform.LookAt(new Vector3(playerPosition.position.x, transform.position.y, playerPosition.position.z));
         if (Time.time - lastAttackTime > 0.5f)
@@ -228,7 +246,15 @@ public class WorkingEnemyController : MonoBehaviour
         delayCount = 2;
 
         enemyHealthManager = GetComponent<EnemyHealthManager>();
-        mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
+
+        if (GameObject.Find("MainMapManager") != null)
+        {
+            mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
+        }
+        else
+        {
+            mainMapManager = null;
+        }
     }
 
     // Update is called once per frame
@@ -246,8 +272,9 @@ public class WorkingEnemyController : MonoBehaviour
         playerPosition = player.transform;
         initDistance = (initPosition - transform.position).magnitude;
 
-        if (mainMapManager.isServerActivated)
+        if (mainMapManager != null && mainMapManager.isServerActivated)
         {
+            IsVisible(playerPosition.position, 100);    // To call animator.SetFloat
             AlertThree();
         }
         else if (IsVisible(playerPosition.position, 12))

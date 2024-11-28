@@ -10,6 +10,8 @@ TagManager:
   - Enemy
   - DroneLaser
   - LaserObstacle
+  - Mission_01
+  - Mission_04
   layers:
   - Default
   - TransparentFX
