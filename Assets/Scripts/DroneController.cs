@@ -53,7 +53,7 @@ public class DroneController : MonoBehaviour
         {
             mainMapManager = null;
         }
-        
+
         isAlertPlayed = false;
         droneUIManager = GetComponent<DroneUIManager>();
         droneGameState = DroneGameState.InGame;
@@ -193,7 +193,7 @@ public class DroneController : MonoBehaviour
         {
             alert_red.SetActive(false);
         }
-        
+
         playerAudio.PlayOneShot(droneDeathAudio);
         droneDeathParticle.Play();
         rb.useGravity = true;
