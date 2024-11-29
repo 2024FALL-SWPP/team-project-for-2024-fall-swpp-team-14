@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyHealthManager : MonoBehaviour
 {
-    public int enemyHp = 100;
+    private int enemyHp = 100;
     private bool isDead = false;
     Animator enemyAnimator;
     private ParticleSystem deathParticle;
@@ -41,7 +41,6 @@ public class EnemyHealthManager : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("enemy hit");
         if (other.CompareTag("DroneLaser")) //if hit by drone's laser, decrease HP
         {
             enemyHp -= 20;
