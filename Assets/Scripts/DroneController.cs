@@ -30,6 +30,7 @@ public class DroneController : MonoBehaviour
     private bool isAlertPlayed = false;
     private DroneUIManager droneUIManager;
     public AudioClip droneDeathAudio;
+    public AudioClip droneDamageAudio;
     public ParticleSystem droneDeathParticle;
 
     public enum DroneGameState { InGame, GameOver, MapClear };
@@ -52,7 +53,7 @@ public class DroneController : MonoBehaviour
         {
             mainMapManager = null;
         }
-        
+
         isAlertPlayed = false;
         droneUIManager = GetComponent<DroneUIManager>();
         droneGameState = DroneGameState.InGame;
@@ -153,6 +154,7 @@ public class DroneController : MonoBehaviour
         {
             if (other.CompareTag("Laser"))
             {
+                playerAudio.PlayOneShot(droneDamageAudio);
                 DroneGetDamaged(10);
             }
         }
@@ -163,6 +165,7 @@ public class DroneController : MonoBehaviour
         {
             if (other.CompareTag("LaserObstacle"))
             {
+                playerAudio.PlayOneShot(droneDamageAudio);
                 if (Time.time - lastDamagedTimeByLaserObstacle > 0.5f)
                 {
                     DroneGetDamaged(10);
@@ -175,6 +178,7 @@ public class DroneController : MonoBehaviour
     void DroneGetDamaged(int damage)
     {
         droneHp -= damage;
+
         if (droneHp <= 0)
         {
 
@@ -189,7 +193,7 @@ public class DroneController : MonoBehaviour
         {
             alert_red.SetActive(false);
         }
-        
+
         playerAudio.PlayOneShot(droneDeathAudio);
         droneDeathParticle.Play();
         rb.useGravity = true;
