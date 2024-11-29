@@ -10,6 +10,7 @@ public class SoundTest : MonoBehaviour
 
     //NPC Laser Shoot Test
     public AudioClip enemyShootLaserAudio;
+    private float lastDamagedTimeByLaserObstacle = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,8 +48,7 @@ public class SoundTest : MonoBehaviour
     {
         if (other.CompareTag("Laser"))
         {
-            playerAudio.PlayOneShot(droneDamageAudio);
-            Debug.Log("Drone Damage Audio successfully played for Laser");
+            DroneGetDamaged(10);
         }
     }
 
@@ -56,9 +56,19 @@ public class SoundTest : MonoBehaviour
     {
         if (other.CompareTag("LaserObstacle"))
         {
-            playerAudio.PlayOneShot(droneDamageAudio);
-            Debug.Log("Drone Damage Audio successfully played for Laser Obstacle");
+            if (Time.time - lastDamagedTimeByLaserObstacle > 0.5f)
+            {
+                DroneGetDamaged(10);
+                lastDamagedTimeByLaserObstacle = Time.time;
+            }
         }
     }
+
+    void DroneGetDamaged(int damage)
+    {
+        playerAudio.PlayOneShot(droneDamageAudio);
+        Debug.Log("Drone Damage Audio successfully played");
+    }
+
 
 }
