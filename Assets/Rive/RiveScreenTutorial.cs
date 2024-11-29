@@ -25,6 +25,15 @@ public class RiveScreenTutorial : MonoBehaviour
 
     public StateMachine stateMachine => m_stateMachine;
 
+    //For Fetching Inputs
+    SMITrigger nextNarration;
+    SMIBool mission1Complete;
+    SMIBool mission2Complete1;
+    SMIBool mission2Complete2;
+    SMIBool mission3Complete;
+    public int missionInt = 0;
+
+
     private static bool flipY()
     {
         switch (UnityEngine.SystemInfo.graphicsDeviceType)
@@ -107,6 +116,13 @@ public class RiveScreenTutorial : MonoBehaviour
             return;
         }
 
+        //fetching inputs
+        nextNarration = m_stateMachine.GetTrigger("nextNarration");
+        mission1Complete = m_stateMachine.GetBool("mission1_complete");
+        mission2Complete1 = m_stateMachine.GetBool("mission2_complete1");
+        mission2Complete2 = m_stateMachine.GetBool("mission2_complete2");
+        mission3Complete = m_stateMachine.GetBool("mission3_complete");
+
         Camera camera = gameObject.GetComponent<Camera>();
         if (camera != null)
         {
@@ -157,6 +173,13 @@ public class RiveScreenTutorial : MonoBehaviour
         }
 
         m_stateMachine?.Advance(Time.deltaTime);
+
+        Debug.Log("next narration: " + nextNarration);
+
+        // if (nextNarration) //whenever nextNarration is triggered, increment missionInt
+        // {
+        //     missionInt++;
+        // }
 
     }
 
