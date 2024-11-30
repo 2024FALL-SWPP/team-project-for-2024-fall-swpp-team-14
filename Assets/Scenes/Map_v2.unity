@@ -17946,6 +17946,14 @@ PrefabInstance:
       propertyPath: AlertAudio
       value: 
       objectReference: {fileID: 8300000, guid: f7281a7bc930ff24794c7a5ff554dc4d, type: 3}
+    - target: {fileID: 3322246234703569443, guid: 66876cdd8fe124e73a007741bdc8804b, type: 3}
+      propertyPath: shootLaserAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: a206f42358576494693a62161062970d, type: 3}
+    - target: {fileID: 3322246234703569443, guid: 66876cdd8fe124e73a007741bdc8804b, type: 3}
+      propertyPath: droneDamageAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 463a9c99043b0493b806e9c789a07f4b, type: 3}
     - target: {fileID: 7857725679551559010, guid: 66876cdd8fe124e73a007741bdc8804b, type: 3}
       propertyPath: m_RootOrder
       value: 2
