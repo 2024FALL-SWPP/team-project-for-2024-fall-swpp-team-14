@@ -8583,7 +8583,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &604116049
+--- !u!114 &604116055
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8595,13 +8595,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b39df447405c4e33b42d67292636162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialUI: {fileID: -4516626237390682484, guid: 8740113ea598b41e896e0a398eddc50b, type: 3}
-  alertUI: {fileID: -4516626237390682484, guid: e06cfa5a8ad1d45f79b40a24271ca794, type: 3}
-  ammoBarUI: {fileID: -4516626237390682484, guid: b0369169b8abf412aa013b6d12d70ffa, type: 3}
-  hpBarUI: {fileID: -4516626237390682484, guid: 6bc633d96e8894672a57fc428f4068c0, type: 3}
+  asset_list:
+  - {fileID: -4516626237390682484, guid: 70ab92d979504499da9ae1fc8133c1b5, type: 3}
+  - {fileID: -4516626237390682484, guid: e06cfa5a8ad1d45f79b40a24271ca794, type: 3}
+  - {fileID: -4516626237390682484, guid: 6bc633d96e8894672a57fc428f4068c0, type: 3}
   cameraEvent: 20
   fit: 1
-  missionInt: 0
+  isTutorialMissionCleared: 00000000
+  narrationInt: 0
 --- !u!1 &605321055 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6262424598808253366, guid: 819c758ec1d154be9ac76b7394611c48, type: 3}
