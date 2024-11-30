@@ -169,6 +169,7 @@ public class DroneController : MonoBehaviour
                     DroneGetDamaged(10);
                     lastDamagedTimeByLaserObstacle = Time.time;
                 }
+
             }
         }
     }
