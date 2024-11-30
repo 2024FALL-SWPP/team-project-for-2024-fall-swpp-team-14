@@ -5,6 +5,7 @@ using Rive;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Rendering;
+using System.Collections;
 public class RiveScreenTutorial : MonoBehaviour
 {
     public Rive.Asset[] asset_list;
@@ -22,6 +23,7 @@ public class RiveScreenTutorial : MonoBehaviour
     private Artboard[] m_artboard = new Artboard[3];
     private StateMachine[] m_stateMachine = new StateMachine[3];
     private CameraTextureHelper[] m_helper = new CameraTextureHelper[3];
+    public DroneController droneController;
 
     //public StateMachine stateMachine => m_stateMachine; //state machine is changed to being public
 
@@ -227,6 +229,11 @@ public class RiveScreenTutorial : MonoBehaviour
             }
         }
 
+        if (missionBools[3].Value)
+        {
+            StartCoroutine(WaitAndMapClear());
+        }
+
     }
 
     private void OnDisable()
@@ -271,15 +278,21 @@ public class RiveScreenTutorial : MonoBehaviour
     {
         if (m_stateMachine[0] != null) // Or use the relevant index or artboard
         {
-            m_stateMachine[0].Advance(animationTime);
+            //m_stateMachine[0].Advance(animationTime);
         }
         Camera camera = gameObject.GetComponent<Camera>();
-        for (int i = 0; i < 3; i++)
-        {
-            if (m_commandBuffer[i] != null && camera != null)
-            {
-                camera.AddCommandBuffer(cameraEvent, m_commandBuffer[i]);
-            }
-        }
+        // for (int i = 0; i < 3; i++)
+        // {
+        //     if (m_commandBuffer[i] != null && camera != null)
+        //     {
+        //         camera.AddCommandBuffer(cameraEvent, m_commandBuffer[i]);
+        //     }
+        // }
+    }
+
+    IEnumerator WaitAndMapClear()
+    {
+        yield return new WaitForSeconds(5f);
+        droneController.MapClear();
     }
 }

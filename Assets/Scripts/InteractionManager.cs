@@ -55,7 +55,7 @@ public class InteractionManager : MonoBehaviour
                             labtopController.StartInteraction();
                             laptopCamera = hit.collider.gameObject.transform.Find("LaptopCamera").GetComponent<Camera>();
                             laptopCamera.enabled = true;
-                            drone.SetActive(false);
+                            //drone.SetActive(false);
                         }
 
                     }
