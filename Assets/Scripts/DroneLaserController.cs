@@ -8,7 +8,7 @@ public class DroneLaserController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Script is attached to: " + gameObject.name);
+
     }
 
     // Update is called once per frame

@@ -739,7 +739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   droneHp: 100
-  shootLaserAudio: {fileID: 8300000, guid: 6005bbd04d6f74702836298ab14d7854, type: 3}
+  shootLaserAudio: {fileID: 8300000, guid: 703a1b7d0d326461d8868a21106fb1a9, type: 3}
   AlertAudio: {fileID: 0}
   droneSpeed: 3
   propellers:
@@ -750,7 +750,6 @@ MonoBehaviour:
   laserProjectile: {fileID: 1630976601828381676, guid: a76940d14ec2848838922d53199d9a88, type: 3}
   currentReloadCnt: 20
   droneDeathAudio: {fileID: 8300000, guid: 96f98f0a6067944338b823ae54cf75e7, type: 3}
-  droneDamageAudio: {fileID: 8300000, guid: 463a9c99043b0493b806e9c789a07f4b, type: 3}
   droneDeathParticle: {fileID: 8162977935941884667}
   droneGameState: 0
 --- !u!82 &1350513436
