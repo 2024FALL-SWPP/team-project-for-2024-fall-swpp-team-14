@@ -3,8 +3,7 @@ guid: 08b57c04eae2b574c8009a4f02588fcd
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - enemyShootLaserAudio: {fileID: 8300000, guid: 8b6ee9c31b0024944a4b70127acde35d, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

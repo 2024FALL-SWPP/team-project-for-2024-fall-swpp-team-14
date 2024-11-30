@@ -30,7 +30,6 @@ public class DroneController : MonoBehaviour
     private bool isAlertPlayed = false;
     private DroneUIManager droneUIManager;
     public AudioClip droneDeathAudio;
-    public AudioClip droneDamageAudio;
     public ParticleSystem droneDeathParticle;
 
     public enum DroneGameState { InGame, GameOver, MapClear };
@@ -176,8 +175,6 @@ public class DroneController : MonoBehaviour
     void DroneGetDamaged(int damage)
     {
         droneHp -= damage;
-        playerAudio.PlayOneShot(droneDamageAudio);
-
         if (droneHp <= 0)
         {
 
