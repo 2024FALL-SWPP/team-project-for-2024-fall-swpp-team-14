@@ -7,7 +7,12 @@ using UnityEngine.Assertions;
 using UnityEngine.Rendering;
 public class RiveScreenTutorial : MonoBehaviour
 {
-    public Rive.Asset asset;
+    //Rive Assets
+    public Rive.Asset tutorialUI;
+    public Rive.Asset alertUI;
+    public Rive.Asset ammoUI;
+    public Rive.Asset hpUI;
+
     public CameraEvent cameraEvent = CameraEvent.AfterEverything;
     public Fit fit = Fit.Contain;
     public Alignment alignment = Alignment.Center;
@@ -19,8 +24,19 @@ public class RiveScreenTutorial : MonoBehaviour
     private CommandBuffer m_commandBuffer;
 
     private Rive.File m_file;
+
+    //Artboards
     private Artboard m_artboard;
+    private Artboard alertArtboard;
+    private Artboard ammoArtboard;
+    private Artboard hpArtboard;
+
+    //State Machines
     private StateMachine m_stateMachine;
+    private StateMachine alertStateMachine;
+    private StateMachine ammoStateMachine;
+    private StateMachine hpStateMachine;
+
     private CameraTextureHelper m_helper;
 
     public StateMachine stateMachine => m_stateMachine;
@@ -68,9 +84,9 @@ public class RiveScreenTutorial : MonoBehaviour
 
     private void Awake()
     {
-        if (asset != null)
+        if (tutorialUI != null)
         {
-            m_file = Rive.File.Load(asset);
+            m_file = Rive.File.Load(tutorialUI);
             m_artboard = m_file.Artboard(0);
             m_stateMachine = m_artboard?.StateMachine();
         }
@@ -96,7 +112,7 @@ public class RiveScreenTutorial : MonoBehaviour
 
     void DrawRive(Rive.RenderQueue queue)
     {
-        if (m_artboard == null)
+        if (m_artboard == null || alertArtboard == null || ammoArtboard == null || hpArtboard == null)
         {
             return;
         }
@@ -173,13 +189,6 @@ public class RiveScreenTutorial : MonoBehaviour
         }
 
         m_stateMachine?.Advance(Time.deltaTime);
-
-        Debug.Log("next narration: " + nextNarration);
-
-        // if (nextNarration) //whenever nextNarration is triggered, increment missionInt
-        // {
-        //     missionInt++;
-        // }
 
     }
 
