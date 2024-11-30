@@ -8,6 +8,7 @@ public class TutorialUIManager : MonoBehaviour
     public GameObject door2;
     public GameObject door3;
     public GameObject robot1;
+    public GameObject robot2;
     public GameObject server;
     public GameObject laptop1;
     public GameObject laptop2;
@@ -18,10 +19,18 @@ public class TutorialUIManager : MonoBehaviour
     private Vector3 door2Target = new Vector3(6.8f, -0.71f, -2);
     private Vector3 door3Target = new Vector3(-2.8f, -0.71f, -5);
 
+    private ServerController serverController; // Declare as fields
+    private LaptopController laptop1Controller;
+    private LaptopController laptop2Controller;
+
+
     // Start is called before the first frame update
     void Start()
     {
         robot1.SetActive(false);
+        serverController = server.GetComponent<ServerController>();
+        laptop1Controller = laptop1.GetComponent<LaptopController>();
+        laptop2Controller = laptop2.GetComponent<LaptopController>();
     }
 
     // Update is called once per frame
@@ -31,10 +40,29 @@ public class TutorialUIManager : MonoBehaviour
         {
             return;
         }
-        if (robot1 == null)
+        if (robot1 == null && narrationInt == 10)
         {
-            riveScreenTutorial.triggerNarrationInt();
+            //riveScreenTutorial.setNarrationInt(11);
+            riveScreenTutorial.missionBools[0].Value = true;
         }
+        if (serverController.getIsInteractionSuccessful() && narrationInt == 13)
+        {
+            //riveScreenTutorial.setNarrationInt(14);
+            riveScreenTutorial.missionBools[1].Value = true;
+        }
+        if (laptop1Controller.getIsInteractionSuccessful() && narrationInt == 14)
+        {
+            //riveScreenTutorial.setNarrationInt(15);
+            Debug.Log("**********************True!!!");
+            riveScreenTutorial.missionBools[2].Value = true;
+        }
+        if (laptop2Controller.getIsInteractionSuccessful() && narrationInt == 16 && robot2 == null)
+        {
+            //riveScreenTutorial.setNarrationInt(17);
+            riveScreenTutorial.missionBools[3].Value = true;
+        }
+
+
         narrationInt = riveScreenTutorial.getNarrationInt();
         Debug.Log("Narration Int: " + narrationInt);
 

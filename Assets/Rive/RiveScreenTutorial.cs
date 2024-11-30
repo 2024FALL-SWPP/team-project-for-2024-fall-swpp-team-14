@@ -30,10 +30,12 @@ public class RiveScreenTutorial : MonoBehaviour
     public SMINumber ammo;
     public SMIBool[] missionBools = new SMIBool[4];
 
+    private float animationTime = 0.0f;
+
+
     //public bool[] isTutorialMissionCleared = new bool[4] { false, false, false, false };
 
     //For Fetching Inputs
-    private SMITrigger nextNarration;
     public int narrationInt = 0; //switch to private later?
 
     private static bool flipY()
@@ -136,7 +138,6 @@ public class RiveScreenTutorial : MonoBehaviour
         // }
 
         //fetching inputs
-        nextNarration = m_stateMachine[0].GetTrigger("nextNarration");
         missionBools[0] = m_stateMachine[0].GetBool("mission1_complete");
         missionBools[1] = m_stateMachine[0].GetBool("mission2_complete1");
         missionBools[2] = m_stateMachine[0].GetBool("mission2_complete2");
@@ -218,6 +219,14 @@ public class RiveScreenTutorial : MonoBehaviour
             m_stateMachine[i]?.Advance(Time.deltaTime);
         }
 
+        for (int i = 0; i < 3; i++)
+        {
+            if (m_stateMachine[i] != null)
+            {
+                m_stateMachine[i].Advance(Time.deltaTime);
+            }
+        }
+
     }
 
     private void OnDisable()
@@ -230,7 +239,10 @@ public class RiveScreenTutorial : MonoBehaviour
                 camera.RemoveCommandBuffer(cameraEvent, m_commandBuffer[i]);
             }
         }
-
+        if (m_stateMachine[0] != null) // Or use the relevant index or artboard
+        {
+            animationTime += Time.deltaTime;
+        }
 
     }
 
@@ -250,9 +262,24 @@ public class RiveScreenTutorial : MonoBehaviour
         return this.narrationInt;
     }
 
-    public void triggerNarrationInt()
+    public void setNarrationInt(int i)
     {
-        this.narrationInt++;
-        this.narrationInt--;
+        this.narrationInt = i;
+    }
+
+    void OnEnable()
+    {
+        if (m_stateMachine[0] != null) // Or use the relevant index or artboard
+        {
+            m_stateMachine[0].Advance(animationTime);
+        }
+        Camera camera = gameObject.GetComponent<Camera>();
+        for (int i = 0; i < 3; i++)
+        {
+            if (m_commandBuffer[i] != null && camera != null)
+            {
+                camera.AddCommandBuffer(cameraEvent, m_commandBuffer[i]);
+            }
+        }
     }
 }

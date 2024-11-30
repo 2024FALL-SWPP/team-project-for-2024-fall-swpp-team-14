@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class InteractionController : MonoBehaviour
 {
-    public bool isInteractionSuccessful = false;
+    protected bool isInteractionSuccessful = false;
     protected InteractionManager interactionManager;
     // Start is called before the first frame update
     void Awake()
@@ -16,5 +16,10 @@ public abstract class InteractionController : MonoBehaviour
     public bool CanInteract()
     {
         return !isInteractionSuccessful;
+    }
+
+    public bool getIsInteractionSuccessful()
+    {
+        return isInteractionSuccessful;
     }
 }
