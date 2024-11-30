@@ -28,12 +28,13 @@ public class RiveScreenTutorial : MonoBehaviour
     public SMINumber alertCount;
     public SMINumber hp;
     public SMINumber ammo;
-    public bool[] isTutorialMissionCleared = new bool[4] { false, false, false, false };
+    public SMIBool[] missionBools = new SMIBool[4];
+
+    //public bool[] isTutorialMissionCleared = new bool[4] { false, false, false, false };
 
     //For Fetching Inputs
     private SMITrigger nextNarration;
-    public int narrationInt = 0;
-
+    public int narrationInt = 0; //switch to private later?
 
     private static bool flipY()
     {
@@ -136,10 +137,17 @@ public class RiveScreenTutorial : MonoBehaviour
 
         //fetching inputs
         nextNarration = m_stateMachine[0].GetTrigger("nextNarration");
-        isTutorialMissionCleared[0] = m_stateMachine[0].GetBool("mission1_complete").Value;
-        isTutorialMissionCleared[1] = m_stateMachine[0].GetBool("mission2_complete1").Value;
-        isTutorialMissionCleared[2] = m_stateMachine[0].GetBool("mission2_complete2").Value;
-        isTutorialMissionCleared[3] = m_stateMachine[0].GetBool("mission3_complete").Value;
+        missionBools[0] = m_stateMachine[0].GetBool("mission1_complete");
+        missionBools[1] = m_stateMachine[0].GetBool("mission2_complete1");
+        missionBools[2] = m_stateMachine[0].GetBool("mission2_complete2");
+        missionBools[3] = m_stateMachine[0].GetBool("mission3_complete");
+
+        if (Input.GetKeyDown(KeyCode.Alpha4)) //if robot1 is dead
+        {
+            missionBools[0].Value = true;
+            this.narrationInt++;
+            this.narrationInt--;
+        }
 
         Camera camera = gameObject.GetComponent<Camera>();
         if (camera != null)
@@ -235,5 +243,16 @@ public class RiveScreenTutorial : MonoBehaviour
         {
             narrationInt++;
         }
+    }
+
+    public int getNarrationInt()
+    {
+        return this.narrationInt;
+    }
+
+    public void triggerNarrationInt()
+    {
+        this.narrationInt++;
+        this.narrationInt--;
     }
 }
