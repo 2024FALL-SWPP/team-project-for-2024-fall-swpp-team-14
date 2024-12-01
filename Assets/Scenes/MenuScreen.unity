@@ -384,3 +384,4 @@ MonoBehaviour:
   asset: {fileID: -4516626237390682484, guid: a113035ed18ae45adb41268bf42f7f77, type: 3}
   cameraEvent: 20
   fit: 1
+  riveScreenTutorial: {fileID: 0}
