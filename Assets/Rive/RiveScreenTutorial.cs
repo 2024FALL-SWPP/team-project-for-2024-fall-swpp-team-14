@@ -115,11 +115,11 @@ public class RiveScreenTutorial : MonoBehaviour
         {
             return;
         }
-        if (i == 1 || i == 2)
+        if (i == 2 || i == 4)
         {
             m_riveRenderer[i].Align(Fit.None, Alignment.TopRight, m_artboard[i]);
         }
-        else if (i == 3)
+        else if (i == 1)
         {
             m_riveRenderer[i].Align(Fit.None, Alignment.BottomRight, m_artboard[i]);
         }
@@ -164,6 +164,13 @@ public class RiveScreenTutorial : MonoBehaviour
         missionBools[1] = m_stateMachine[0].GetBool("mission2_complete1");
         missionBools[2] = m_stateMachine[0].GetBool("mission2_complete2");
         missionBools[3] = m_stateMachine[0].GetBool("mission3_complete");
+
+        ammo = m_stateMachine[1].GetNumber("ammo");
+        hp = m_stateMachine[2].GetNumber("hp");
+        //alertCount = m_stateMachine[3].GetNumber("Alert_count");
+        //alertCount.Value = maxAlert;
+        hp.Value = (int)(droneController.droneHp / 10);
+        ammo.Value = droneController.currentReloadCnt;
 
         if (droneController.droneHp == 0)
         {

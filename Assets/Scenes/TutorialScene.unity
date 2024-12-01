@@ -8648,8 +8648,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asset_list:
-  - {fileID: -4516626237390682484, guid: 57be8e6739fc6438e9612651bdc0dee5, type: 3}
-  - {fileID: -4516626237390682484, guid: e06cfa5a8ad1d45f79b40a24271ca794, type: 3}
+  - {fileID: -4516626237390682484, guid: 1be5996e490674bad8769117eef1db03, type: 3}
+  - {fileID: -4516626237390682484, guid: b0369169b8abf412aa013b6d12d70ffa, type: 3}
   - {fileID: -4516626237390682484, guid: 6bc633d96e8894672a57fc428f4068c0, type: 3}
   cameraEvent: 20
   fit: 1
