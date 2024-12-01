@@ -107,6 +107,7 @@ public class RiveScreen : MonoBehaviour
     private SMINumber moveToMission; //input from rive
     private Vector3 landPosition;
     private Quaternion landRotation;
+    public RiveScreenTutorial riveScreenTutorial;
 
 
     private static bool flipY()
@@ -206,11 +207,13 @@ public class RiveScreen : MonoBehaviour
                 case 2: //Tutorial Mission2
                     landPosition = new Vector3(6, -0.5f, -3);
                     landRotation = Quaternion.Euler(0, 180, 0);
+                    DataTransfer.skiptoTutorial2 = true;
                     SceneManager.LoadSceneAsync("TutorialScene", LoadSceneMode.Single).completed += OnSceneLoaded;
                     break;
                 case 3: //Tutorial Mission 3
                     landPosition = new Vector3(3, 0, -7);
                     landRotation = Quaternion.Euler(0, -90, 0);
+                    DataTransfer.skiptoTutorial3 = true;
                     SceneManager.LoadSceneAsync("TutorialScene", LoadSceneMode.Single).completed += OnSceneLoaded;
                     break;
                 case 4: //MainMap Mission 1

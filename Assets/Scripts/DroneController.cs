@@ -37,6 +37,7 @@ public class DroneController : MonoBehaviour
 
     public DroneGameState droneGameState;
     private float lastDamagedTimeByLaserObstacle = 0;
+
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
@@ -200,12 +201,16 @@ public class DroneController : MonoBehaviour
         rb.AddForce(Vector3.up * 3.0f, ForceMode.Impulse);
         rb.AddTorque(new Vector3(Random.Range(-0.02f, 0.02f), Random.Range(-0.02f, 0.02f), Random.Range(-0.02f, 0.02f)), ForceMode.Impulse);
         droneGameState = DroneGameState.GameOver;
+        DataTransfer.skiptoTutorial2 = false;
+        DataTransfer.skiptoTutorial3 = false;
         droneUIManager.ShowGameOverScreen();
     }
 
     public void MapClear()
     {
         droneGameState = DroneGameState.MapClear;
+        DataTransfer.skiptoTutorial2 = false;
+        DataTransfer.skiptoTutorial3 = false;
         droneUIManager.ShowMapClearScreen();
     }
 }

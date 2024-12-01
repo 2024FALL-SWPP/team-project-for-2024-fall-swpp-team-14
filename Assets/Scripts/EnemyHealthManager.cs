@@ -44,7 +44,6 @@ public class EnemyHealthManager : MonoBehaviour
         if (other.CompareTag("DroneLaser")) //if hit by drone's laser, decrease HP
         {
             enemyHp -= 20;
-            Debug.Log("enemy hp decrease");
             if (enemyHp == 0)
             {
                 isDead = true;
