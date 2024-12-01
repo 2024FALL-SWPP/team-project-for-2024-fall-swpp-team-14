@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Rive/alert.riv.meta
 guid: e06cfa5a8ad1d45f79b40a24271ca794
-========
-guid: a90a572cb152f42539b0c68fb54a0e8a
->>>>>>>> shared-main:Assets/Rive/swpp_mapscene.riv.meta
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
