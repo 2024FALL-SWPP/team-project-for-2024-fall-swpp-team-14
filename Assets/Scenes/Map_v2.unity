@@ -17982,21 +17982,7 @@ MonoBehaviour:
   asset: {fileID: 0}
   cameraEvent: 20
   fit: 1
---- !u!114 &501137867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 501137865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b39df447405c4e33b42d67292636162, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  asset: {fileID: -4516626237390682484, guid: e8e39e6338d624009b611ec2deebfb6c, type: 3}
-  cameraEvent: 20
-  fit: 1
+  riveScreenTutorial: {fileID: 0}
 --- !u!1001 &501632853
 PrefabInstance:
   m_ObjectHideFlags: 0
