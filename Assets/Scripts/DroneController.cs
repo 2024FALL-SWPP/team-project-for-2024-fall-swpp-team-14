@@ -170,6 +170,7 @@ public class DroneController : MonoBehaviour
                     DroneGetDamaged(10);
                     lastDamagedTimeByLaserObstacle = Time.time;
                 }
+
             }
         }
     }
@@ -178,7 +179,6 @@ public class DroneController : MonoBehaviour
     {
         droneHp -= damage;
         playerAudio.PlayOneShot(droneDamageAudio);
-
         if (droneHp <= 0)
         {
 

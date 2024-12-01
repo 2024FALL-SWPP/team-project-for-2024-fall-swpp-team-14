@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2868941384152522204}
   - component: {fileID: 8085485002397491977}
   - component: {fileID: 7562544710209327671}
-  - component: {fileID: 623238380456361982}
+  - component: {fileID: -8143768832610240117}
   m_Layer: 0
   m_Name: EnemyLaserPrefab
   m_TagString: Laser
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b57c04eae2b574c8009a4f02588fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyShootLaserAudio: {fileID: 8300000, guid: 8b6ee9c31b0024944a4b70127acde35d, type: 3}
+  enemyShootAudio: {fileID: 8300000, guid: 8b6ee9c31b0024944a4b70127acde35d, type: 3}
 --- !u!65 &8085485002397491977
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -78,7 +78,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!82 &623238380456361982
+--- !u!82 &-8143768832610240117
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

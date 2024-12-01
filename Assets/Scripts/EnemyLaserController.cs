@@ -6,12 +6,12 @@ public class EnemyLaserController : MonoBehaviour
 {
     private float enemyLaserSpeed = 5.0f;
     private AudioSource enemyAudio;
-    public AudioClip enemyShootLaserAudio;
+    public AudioClip enemyShootAudio;
     // Start is called before the first frame update
     void Start()
     {
         enemyAudio = GetComponent<AudioSource>();
-        enemyAudio.PlayOneShot(enemyShootLaserAudio);
+        enemyAudio.PlayOneShot(enemyShootAudio);
     }
 
     // Update is called once per frame
