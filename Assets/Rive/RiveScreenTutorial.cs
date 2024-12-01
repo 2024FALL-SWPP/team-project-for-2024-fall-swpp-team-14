@@ -134,6 +134,22 @@ public class RiveScreenTutorial : MonoBehaviour
     private Vector2 m_lastMousePosition;
     bool m_wasMouseDown = false;
 
+    void Start()
+    {
+        skipStarts[0] = m_stateMachine[0].GetBool("startAtMission2");
+        skipStarts[1] = m_stateMachine[0].GetBool("startAtMission3");
+        if (DataTransfer.skiptoTutorial2)
+        {
+            setNarrationInt(11);
+            skipStarts[0].Value = true;
+        }
+        else if (DataTransfer.skiptoTutorial3)
+        {
+            setNarrationInt(15);
+            skipStarts[1].Value = true;
+        }
+    }
+
     private void Update()
     {
         // m_helper?.UpdateTextureHelper();
@@ -143,20 +159,11 @@ public class RiveScreenTutorial : MonoBehaviour
         // }
 
         //fetching inputs
-        skipStarts[0] = m_stateMachine[0].GetBool("startAtMission2");
-        skipStarts[1] = m_stateMachine[0].GetBool("startAtMission3");
 
         missionBools[0] = m_stateMachine[0].GetBool("mission1_complete");
         missionBools[1] = m_stateMachine[0].GetBool("mission2_complete1");
         missionBools[2] = m_stateMachine[0].GetBool("mission2_complete2");
         missionBools[3] = m_stateMachine[0].GetBool("mission3_complete");
-
-        if (Input.GetKeyDown(KeyCode.Alpha4)) //if robot1 is dead
-        {
-            missionBools[0].Value = true;
-            this.narrationInt++;
-            this.narrationInt--;
-        }
 
         if (droneController.droneHp == 0)
         {

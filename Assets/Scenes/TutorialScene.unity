@@ -25219,6 +25219,10 @@ PrefabInstance:
       propertyPath: droneSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3322246234703569443, guid: 66876cdd8fe124e73a007741bdc8804b, type: 3}
+      propertyPath: riveScreenTutorial
+      value: 
+      objectReference: {fileID: 604116055}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66876cdd8fe124e73a007741bdc8804b, type: 3}
 --- !u!114 &1821272312 stripped
