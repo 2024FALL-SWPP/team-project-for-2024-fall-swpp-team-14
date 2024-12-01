@@ -107,6 +107,7 @@ public class RiveScreen : MonoBehaviour
     private SMINumber moveToMission; //input from rive
     private Vector3 landPosition;
     private Quaternion landRotation;
+    public RiveScreenTutorial riveScreenTutorial;
 
 
     private static bool flipY()

@@ -91,7 +91,7 @@ public class TutorialUIManager : MonoBehaviour
                     }
                 }
                 break;
-            case 15: //open door3
+            case 16: //open door3
                 if (!isDone[2])
                 {
                     door3.transform.position = Vector3.MoveTowards(door3.transform.position, door3Target, 2 * Time.deltaTime);

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Rendering;
 using System.Collections;
+
 public class RiveScreenTutorial : MonoBehaviour
 {
     public Rive.Asset[] asset_list;
@@ -31,6 +32,8 @@ public class RiveScreenTutorial : MonoBehaviour
     public SMINumber hp;
     public SMINumber ammo;
     public SMIBool[] missionBools = new SMIBool[4];
+
+    public SMIBool[] skipStarts = new SMIBool[2];
 
     private float animationTime = 0.0f;
 
@@ -140,6 +143,9 @@ public class RiveScreenTutorial : MonoBehaviour
         // }
 
         //fetching inputs
+        skipStarts[0] = m_stateMachine[0].GetBool("startAtMission2");
+        skipStarts[1] = m_stateMachine[0].GetBool("startAtMission3");
+
         missionBools[0] = m_stateMachine[0].GetBool("mission1_complete");
         missionBools[1] = m_stateMachine[0].GetBool("mission2_complete1");
         missionBools[2] = m_stateMachine[0].GetBool("mission2_complete2");
@@ -150,6 +156,11 @@ public class RiveScreenTutorial : MonoBehaviour
             missionBools[0].Value = true;
             this.narrationInt++;
             this.narrationInt--;
+        }
+
+        if (droneController.droneHp == 0)
+        {
+            this.enabled = false;
         }
 
         Camera camera = gameObject.GetComponent<Camera>();
@@ -294,5 +305,6 @@ public class RiveScreenTutorial : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
         droneController.MapClear();
+        this.enabled = false;
     }
 }

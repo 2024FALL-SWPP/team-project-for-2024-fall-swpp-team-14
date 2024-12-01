@@ -8572,11 +8572,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asset_list:
-  - {fileID: -4516626237390682484, guid: 70ab92d979504499da9ae1fc8133c1b5, type: 3}
+  - {fileID: -4516626237390682484, guid: 57be8e6739fc6438e9612651bdc0dee5, type: 3}
   - {fileID: -4516626237390682484, guid: e06cfa5a8ad1d45f79b40a24271ca794, type: 3}
   - {fileID: -4516626237390682484, guid: 6bc633d96e8894672a57fc428f4068c0, type: 3}
   cameraEvent: 20
   fit: 1
+  droneController: {fileID: 1821272312}
   narrationInt: 0
 --- !u!1 &605321055 stripped
 GameObject:
@@ -25220,6 +25221,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66876cdd8fe124e73a007741bdc8804b, type: 3}
+--- !u!114 &1821272312 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3322246234703569443, guid: 66876cdd8fe124e73a007741bdc8804b, type: 3}
+  m_PrefabInstance: {fileID: 1821272311}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 459c45393f5d94ec48631a7dae0c134b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1834865793
 GameObject:
   m_ObjectHideFlags: 0
