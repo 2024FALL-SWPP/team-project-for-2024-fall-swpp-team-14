@@ -37,6 +37,8 @@ public class DroneController : MonoBehaviour
 
     public DroneGameState droneGameState;
     private float lastDamagedTimeByLaserObstacle = 0;
+    private bool damageAudioWasPlayed;
+
 
     void Start()
     {
@@ -149,17 +151,19 @@ public class DroneController : MonoBehaviour
         currentReloadCnt = MaxReloadCnt;
     }
 
-    void OnTriggerEnter(Collider other)
+    public string OnTriggerEnter(Collider other)
     {
         if (droneGameState == DroneGameState.InGame)
         {
             if (other.CompareTag("Laser"))
             {
-                DroneGetDamaged(10);
+                string str = DroneGetDamaged(10);
+                return str;
             }
         }
+        return null;
     }
-    void OnTriggerStay(Collider other)
+    public void OnTriggerStay(Collider other)
     {
         if (droneGameState == DroneGameState.InGame)
         {
@@ -175,15 +179,17 @@ public class DroneController : MonoBehaviour
         }
     }
 
-    void DroneGetDamaged(int damage)
+    string DroneGetDamaged(int damage)
     {
         droneHp -= damage;
         playerAudio.PlayOneShot(droneDamageAudio);
+        damageAudioWasPlayed = true;
         if (droneHp <= 0)
         {
 
             GameOver();
         }
+        return "Drone Sound Successfully played";
     }
 
     public void GameOver()
@@ -212,5 +218,10 @@ public class DroneController : MonoBehaviour
         DataTransfer.skiptoTutorial2 = false;
         DataTransfer.skiptoTutorial3 = false;
         droneUIManager.ShowMapClearScreen();
+    }
+
+    public bool getDamageAudioWasPlayed()
+    {
+        return damageAudioWasPlayed;
     }
 }
