@@ -17,4 +17,9 @@ public abstract class InteractionController : MonoBehaviour
     {
         return !isInteractionSuccessful;
     }
+
+    public bool getIsInteractionSuccessful()
+    {
+        return isInteractionSuccessful;
+    }
 }

@@ -157,6 +157,7 @@ public class InteractionManager : MonoBehaviour
         droneController = drone.GetComponent<DroneController>();
         droneUIManager = drone.GetComponent<DroneUIManager>();
         droneRenderer = GameObject.Find("Aircraft1").GetComponent<Renderer>();
+        droneRenderer.enabled = true;
     }
 
     public Camera GetMainCamera()

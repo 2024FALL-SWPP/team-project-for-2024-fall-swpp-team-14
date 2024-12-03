@@ -30,14 +30,16 @@ public class DroneController : MonoBehaviour
     private bool isAlertPlayed = false;
     private DroneUIManager droneUIManager;
     public AudioClip droneDeathAudio;
+    public AudioClip droneDamageAudio;
     public ParticleSystem droneDeathParticle;
 
     public enum DroneGameState { InGame, GameOver, MapClear };
 
     public DroneGameState droneGameState;
     private float lastDamagedTimeByLaserObstacle = 0;
-
+    private bool damageAudioWasPlayed;
     private RiveAnimationManager riveAnimationManager;
+
 
     void Start()
     {
@@ -55,7 +57,7 @@ public class DroneController : MonoBehaviour
         {
             mainMapManager = null;
         }
-        
+
         isAlertPlayed = false;
         droneUIManager = GetComponent<DroneUIManager>();
         droneGameState = DroneGameState.InGame;
@@ -116,6 +118,7 @@ public class DroneController : MonoBehaviour
 
     void LateUpdate()
     {
+        Debug.Log(droneCamera.localPosition);
         if (controlEnabled && droneGameState == DroneGameState.InGame)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -164,13 +167,14 @@ public class DroneController : MonoBehaviour
         currentReloadCnt = MaxReloadCnt;
     }
 
-    void OnTriggerEnter(Collider other)
+    public string OnTriggerEnter(Collider other)
     {
         if (droneGameState == DroneGameState.InGame)
         {
             if (other.CompareTag("Laser"))
             {
-                DroneGetDamaged(10);
+                string str = DroneGetDamaged(10);
+                return str;
             }
             else if (riveAnimationManager != null && other.CompareTag("Mission_01"))
             {
@@ -181,8 +185,9 @@ public class DroneController : MonoBehaviour
                 riveAnimationManager.isMainMapMissionCleared[3] = true;
             }
         }
+        return null;
     }
-    void OnTriggerStay(Collider other)
+    public void OnTriggerStay(Collider other)
     {
         if (droneGameState == DroneGameState.InGame)
         {
@@ -193,18 +198,22 @@ public class DroneController : MonoBehaviour
                     DroneGetDamaged(10);
                     lastDamagedTimeByLaserObstacle = Time.time;
                 }
+
             }
         }
     }
 
-    void DroneGetDamaged(int damage)
+    string DroneGetDamaged(int damage)
     {
         droneHp -= damage;
+        playerAudio.PlayOneShot(droneDamageAudio);
+        damageAudioWasPlayed = true;
         if (droneHp <= 0)
         {
 
             GameOver();
         }
+        return "Drone Sound Successfully played";
     }
 
     public void GameOver()
@@ -214,7 +223,7 @@ public class DroneController : MonoBehaviour
         {
             alert_red.SetActive(false);
         }
-        
+
         playerAudio.PlayOneShot(droneDeathAudio);
         droneDeathParticle.Play();
         rb.useGravity = true;
@@ -222,12 +231,21 @@ public class DroneController : MonoBehaviour
         rb.AddForce(Vector3.up * 3.0f, ForceMode.Impulse);
         rb.AddTorque(new Vector3(Random.Range(-0.02f, 0.02f), Random.Range(-0.02f, 0.02f), Random.Range(-0.02f, 0.02f)), ForceMode.Impulse);
         droneGameState = DroneGameState.GameOver;
+        DataTransfer.skiptoTutorial2 = false;
+        DataTransfer.skiptoTutorial3 = false;
         droneUIManager.ShowGameOverScreen();
     }
 
     public void MapClear()
     {
         droneGameState = DroneGameState.MapClear;
+        DataTransfer.skiptoTutorial2 = false;
+        DataTransfer.skiptoTutorial3 = false;
         droneUIManager.ShowMapClearScreen();
+    }
+
+    public bool getDamageAudioWasPlayed()
+    {
+        return damageAudioWasPlayed;
     }
 }
