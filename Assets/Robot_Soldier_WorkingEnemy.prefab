@@ -2171,7 +2171,7 @@ Animator:
   m_GameObject: {fileID: 443109960755410043}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 535511bb156e7f54f83f305d96a1c4ce, type: 3}
-  m_Controller: {fileID: 9100000, guid: 69c6fe05683dcee4ea44aed00b6fad46, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0e9e7559f0c611a4daffbbd069965591, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2210,7 +2210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b5db6bc82f64757810528cebcd2044, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHp: 100
   enemyDeathAudio: {fileID: 8300000, guid: 4d2c9b6554ab1418e9bb4f8df9f134c3, type: 3}
 --- !u!114 &-252227322433708669
 MonoBehaviour:
@@ -2234,7 +2233,6 @@ MonoBehaviour:
   rangeZ: 0
   speed: 0
   initDistance: 0
-  alertState: 0
 --- !u!195 &8135342249377357674
 NavMeshAgent:
   m_ObjectHideFlags: 0

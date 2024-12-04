@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 
 public class Enemy
@@ -206,11 +205,6 @@ public class EnemyGenerator : MonoBehaviour
     public GameObject enemyLaserPrefab;
     private MainMapManager mainMapManager;
     public List<GameObject> enemyList = new List<GameObject>();
-    private List<GameObject> totalEnemyList = new List<GameObject>();
-
-    public int maxAlert;
-    private int alertState = 0;
-
     public GameObject EnemySetter(float initX, float initY, float initZ, float initYRot)
     {
         EnemyBuilder enemyBuilder = new EnemyBuilder();
@@ -267,53 +261,52 @@ public class EnemyGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        maxAlert = 0;
         mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
         //EnemySetter(60.82f, 2.1f, -5.93f, 90f);
         //WorkingEnemySetter(60.82f, 2.1f, -5.93f, 90f, 65.82f, -5.93f, 2f);
 
         // 1층 창고 경비병 하나
-        totalEnemyList.Add(PatrolEnemySetter(54.637f, 3.385209f, -29.76f, 0f, 54.637f, -19.76f, 2f));
+        PatrolEnemySetter(54.637f, 3.385209f, -29.76f, 0f, 54.637f, -19.76f, 2f);
 
         // 1층 정문 경비병 둘
-        totalEnemyList.Add(StandingEnemySetter(59.82f, 2.09182f, -5.931f, 90f, 2f));
-        totalEnemyList.Add(StandingEnemySetter(59.82f, 1.908182f, -9.72f, 90f, 2f));
+        StandingEnemySetter(59.82f, 2.09182f, -5.931f, 90f, 2f);
+        StandingEnemySetter(59.82f, 1.908182f, -9.72f, 90f, 2f);
 
         // 1층 후문 경비병 하나
-        totalEnemyList.Add(PatrolEnemySetter(25.63f, 2.0919f, -21.96f, 0f, 25.63f, -17.4f, 2f));
+        PatrolEnemySetter(25.63f, 2.0919f, -21.96f, 0f, 25.63f, -17.4f, 2f);
 
         // 1층 검문소 경비병 넷
-        totalEnemyList.Add(StandingEnemySetter(56.36145f, 3.405238f, -6f, 180f, 2f));
-        totalEnemyList.Add(StandingEnemySetter(53.36145f, 3.405238f, -6f, 180f, 2f));
-        totalEnemyList.Add(StandingEnemySetter(50.36145f, 3.405238f, -6f, 180f, 2f));
-        totalEnemyList.Add(StandingEnemySetter(47.36145f, 3.405238f, -6f, 180f, 2f));
+        StandingEnemySetter(56.36145f, 3.405238f, -6f, 180f, 2f);
+        StandingEnemySetter(53.36145f, 3.405238f, -6f, 180f, 2f);
+        StandingEnemySetter(50.36145f, 3.405238f, -6f, 180f, 2f);
+        StandingEnemySetter(47.36145f, 3.405238f, -6f, 180f, 2f);
 
         // 1층 내부 중앙 복도 경비병 둘
-        totalEnemyList.Add(StandingEnemySetter(50.6f, 3.385209f, -17.72f, -120f, 2f));
-        totalEnemyList.Add(StandingEnemySetter(50.6f, 3.385209f, -22.13f, -60f, 2f));
+        StandingEnemySetter(50.6f, 3.385209f, -17.72f, -120f, 2f);
+        StandingEnemySetter(50.6f, 3.385209f, -22.13f, -60f, 2f);
 
         // 1층 광장 노동자 셋
-        totalEnemyList.Add(WorkingEnemySetter(35.19f, 3.38521f, -36.33f, 90f, 41.19f, -36.33f, 2f));
-        totalEnemyList.Add(WorkingEnemySetter(38.17f, 3.38521f, -33.45f, 90f, 48.17f, -33.45f, 2f));
-        totalEnemyList.Add(WorkingEnemySetter(53.28f, 3.38521f, -36.33f, -90f, 46.28f, -36.33f, 2f));
+        WorkingEnemySetter(35.19f, 3.38521f, -36.33f, 90f, 41.19f, -36.33f, 2f);
+        WorkingEnemySetter(38.17f, 3.38521f, -33.45f, 90f, 48.17f, -33.45f, 2f);
+        WorkingEnemySetter(53.28f, 3.38521f, -36.33f, -90f, 46.28f, -36.33f, 2f);
 
         // 계단 위 경비병 하나
-        totalEnemyList.Add(StandingEnemySetter(31.08f, 8.28f, -33.635f, 180f, 2f));
+        StandingEnemySetter(31.08f, 8.28f, -33.635f, 180f, 2f);
 
         // 2층 진입지 경비병 여섯
-        totalEnemyList.Add(StandingEnemySetter(35.3f, 9.8f, -27.22f, 180f, 2f));
-        totalEnemyList.Add(StandingEnemySetter(38.3f, 9.8f, -27.22f, 180f, 2f));
-        totalEnemyList.Add(StandingEnemySetter(41.3f, 9.8f, -27.22f, 180f, 2f));
-        totalEnemyList.Add(StandingEnemySetter(44.3f, 9.8f, -27.22f, 180f, 2f));
-        totalEnemyList.Add(StandingEnemySetter(47.3f, 9.8f, -27.22f, 180f, 2f));
-        totalEnemyList.Add(StandingEnemySetter(50.3f, 9.8f, -27.22f, 180f, 2f));
-        
+        StandingEnemySetter(35.3f, 9.8f, -27.22f, 180f, 2f);
+        StandingEnemySetter(38.3f, 9.8f, -27.22f, 180f, 2f);
+        StandingEnemySetter(41.3f, 9.8f, -27.22f, 180f, 2f);
+        StandingEnemySetter(44.3f, 9.8f, -27.22f, 180f, 2f);
+        StandingEnemySetter(47.3f, 9.8f, -27.22f, 180f, 2f);
+        StandingEnemySetter(50.3f, 9.8f, -27.22f, 180f, 2f);
+
         // 2층 서버실 순찰조 경비병 둘
-        totalEnemyList.Add(PatrolEnemySetter(29.37f, 9.8f, -6.41f, 90f, 56.17f, -6.41f, 2f));
-        totalEnemyList.Add(PatrolEnemySetter(56.17f, 9.8f, -19.9f, -90f, 29.37f, -19.9f, 2f));
+        PatrolEnemySetter(29.37f, 9.8f, -6.41f, 90f, 56.17f, -6.41f, 2f);
+        PatrolEnemySetter(56.17f, 9.8f, -19.9f, -90f, 29.37f, -19.9f, 2f);
 
         // 2층 서버실 경비병 하나
-        totalEnemyList.Add(StandingEnemySetter(38.99f, 9.8f, -10.131f, 0f, 2f));
+        StandingEnemySetter(38.99f, 9.8f, -10.131f, 0f, 2f);
 
         // 2층 서버실 옆 비활성화된 경비병 여섯
         enemyList.Add(EnemySetter(46.332f, 9.8f, -12.508f, 90f));
@@ -340,33 +333,9 @@ public class EnemyGenerator : MonoBehaviour
                 float tempYRot = enemyList[i].transform.rotation.y;
 
                 Destroy(enemyList[i]);
-                totalEnemyList.Add(StandingEnemySetter(tempPos.x, tempPos.y, tempPos.z, tempYRot, 2f));
+                StandingEnemySetter(tempPos.x, tempPos.y, tempPos.z, tempYRot, 2f);
             }
             enemyList = new List<GameObject>();
-        }
-
-        maxAlert = 0;
-        foreach (GameObject enemy in totalEnemyList)
-        {
-            if (enemy == null)
-            {
-                continue;
-            }
-            alertState = 0;
-            if (enemy.GetComponent<StandingEnemyController>() != null)
-            {
-                alertState = enemy.GetComponent<StandingEnemyController>().alertState;
-            }
-            else if (enemy.GetComponent<WorkingEnemyController>() != null)
-            {
-                alertState = enemy.GetComponent<WorkingEnemyController>().alertState;
-            }
-            else if (enemy.GetComponent<PatrolEnemyController>() != null)
-            {
-                alertState = enemy.GetComponent<PatrolEnemyController>().alertState;
-            }
-
-            maxAlert = Math.Max(maxAlert, alertState);
         }
     }
 }
