@@ -188,11 +188,14 @@ public class RiveScreen : MonoBehaviour
         Camera camera = gameObject.GetComponent<Camera>();
         if (camera != null)
         {
+            //screen space mouse position (Input.mousePosition) to viewport space
             Vector3 mousePos = camera.ScreenToViewportPoint(Input.mousePosition);
             Vector2 mouseRiveScreenPos = new Vector2(
                 mousePos.x * camera.pixelWidth,
                 (1 - mousePos.y) * camera.pixelHeight
             );
+
+            //convert the screen position to a local coordinate system
             if (m_lastMousePosition != mouseRiveScreenPos)
             {
                 Vector2 local = m_artboard.LocalCoordinate(
@@ -204,6 +207,7 @@ public class RiveScreen : MonoBehaviour
                 m_stateMachine?.PointerMove(local);
                 m_lastMousePosition = mouseRiveScreenPos;
             }
+            //Detects a left mouse click.
             if (Input.GetMouseButtonDown(0))
             {
                 Vector2 local = m_artboard.LocalCoordinate(
@@ -215,6 +219,7 @@ public class RiveScreen : MonoBehaviour
                 m_stateMachine?.PointerDown(local);
                 m_wasMouseDown = true;
             }
+            //Checks if the mouse was previously held
             else if (m_wasMouseDown)
             {
                 m_wasMouseDown = false;
