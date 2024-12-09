@@ -24764,7 +24764,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1696763696
 Transform:
   m_ObjectHideFlags: 0
@@ -24793,7 +24793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drone: {fileID: 460285962}
-  laptop: {fileID: 1251408692}
+  laptop: {fileID: 900693509}
   pressInteractionImage: {fileID: 1499634099}
   pressInteractionMessage: {fileID: 0}
   testTime: 0
@@ -32513,7 +32513,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 63333246, guid: c775db7e4753a4fdd95b2f0846129879, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 876413804, guid: c775db7e4753a4fdd95b2f0846129879, type: 3}
       propertyPath: passwordAnswer
@@ -32521,11 +32521,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1062676966, guid: c775db7e4753a4fdd95b2f0846129879, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1461578264, guid: c775db7e4753a4fdd95b2f0846129879, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 443717799488226827, guid: c775db7e4753a4fdd95b2f0846129879, type: 3}
       propertyPath: m_Name
@@ -32533,7 +32533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 443717799488226827, guid: c775db7e4753a4fdd95b2f0846129879, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 443717799488436017, guid: c775db7e4753a4fdd95b2f0846129879, type: 3}
       propertyPath: m_RootOrder
@@ -34061,15 +34061,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1376571220813353203, guid: c775db7e4753a4fdd95b2f0846129879, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4099796588665423095, guid: c775db7e4753a4fdd95b2f0846129879, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6227288725578289262, guid: c775db7e4753a4fdd95b2f0846129879, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c775db7e4753a4fdd95b2f0846129879, type: 3}
