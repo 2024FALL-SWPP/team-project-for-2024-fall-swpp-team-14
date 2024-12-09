@@ -26,7 +26,6 @@ public class InteractionIntegratedTest : MonoBehaviour
     void Update()
     {
         testTime += Time.deltaTime;
-        Debug.Log(pressInteractionMessage.enabled);
         laptop.transform.Translate(0, 0.2f * Time.deltaTime, 0);
         if (testTime > 2.0f && !isTested[0])
         {
