@@ -314,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecd05cc33fcc345fa9e5922e01264061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asset: {fileID: -4516626237390682484, guid: 98f166a5d30c44b9086de9e12582200f, type: 3}
+  asset: {fileID: -4516626237390682484, guid: c1d137911048c40ab870e635c32dfee4, type: 3}
   cameraEvent: 20
   fit: 1
   riveScreenTutorial: {fileID: 0}
