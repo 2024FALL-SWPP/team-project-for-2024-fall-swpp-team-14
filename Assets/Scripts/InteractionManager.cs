@@ -1,37 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 public class InteractionManager : MonoBehaviour
 {
-    public static InteractionManager Instance { get; private set; }
-    private Camera mainCamera;
     private Outline outline;
     private GameObject drone;
     private DroneController droneController;
     private bool isInteracting = false;
     Camera laptopCamera;
     private DroneUIManager droneUIManager;
-    
     private RiveAnimationManager riveAnimationManager;
     private Renderer droneRenderer;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            // DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     private void Start()
     {
@@ -43,6 +25,21 @@ public class InteractionManager : MonoBehaviour
         {
             riveAnimationManager = null;
         }
+        GameObject[] interactableObjects = GameObject.FindGameObjectsWithTag("Laptop");
+        for (int i = 0; i < interactableObjects.Length; i++)
+        {
+            interactableObjects[i].GetComponent<Outline>().enabled = false;
+        }
+        interactableObjects = GameObject.FindGameObjectsWithTag("Server");
+        for (int i = 0; i < interactableObjects.Length; i++)
+        {
+            interactableObjects[i].GetComponent<Outline>().enabled = false;
+        }
+        drone = GameObject.Find("Drone");
+        droneController = drone.GetComponent<DroneController>();
+        droneUIManager = drone.GetComponent<DroneUIManager>();
+        droneRenderer = GameObject.Find("Aircraft1").GetComponent<Renderer>();
+        droneRenderer.enabled = true;
     }
 
     void Update()
@@ -51,7 +48,6 @@ public class InteractionManager : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
             RaycastHit hit;
-            // Debug.DrawRay(ray.origin, ray.direction * 3f, Color.red);
             if (Physics.Raycast(ray, out hit, 3f, LayerMask.GetMask("interactable")) && !isInteracting)
             {
                 GameObject interactionObject = hit.collider.gameObject;
@@ -135,33 +131,4 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        GameObject[] interactableObjects = GameObject.FindGameObjectsWithTag("Laptop");
-        for (int i = 0; i < interactableObjects.Length; i++)
-        {
-            interactableObjects[i].GetComponent<Outline>().enabled = false;
-        }
-        interactableObjects = GameObject.FindGameObjectsWithTag("Server");
-        for (int i = 0; i < interactableObjects.Length; i++)
-        {
-            interactableObjects[i].GetComponent<Outline>().enabled = false;
-        }
-        mainCamera = Camera.main;
-        drone = GameObject.Find("Drone");
-        droneController = drone.GetComponent<DroneController>();
-        droneUIManager = drone.GetComponent<DroneUIManager>();
-        droneRenderer = GameObject.Find("Aircraft1").GetComponent<Renderer>();
-        droneRenderer.enabled = true;
-    }
-
-    public Camera GetMainCamera()
-    {
-        return mainCamera;
-    }
 }
