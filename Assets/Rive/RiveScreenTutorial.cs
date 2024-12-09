@@ -34,6 +34,7 @@ public class RiveScreenTutorial : MonoBehaviour
     public SMIBool[] missionBools = new SMIBool[4];
 
     public SMIBool[] skipStarts = new SMIBool[2];
+    private SMITrigger spacebarTrigger;
 
     private float animationTime = 0.0f;
 
@@ -138,6 +139,7 @@ public class RiveScreenTutorial : MonoBehaviour
     {
         skipStarts[0] = m_stateMachine[0].GetBool("startAtMission2");
         skipStarts[1] = m_stateMachine[0].GetBool("startAtMission3");
+        spacebarTrigger = m_stateMachine[0].GetTrigger("nextNarration");
         if (DataTransfer.skiptoTutorial2)
         {
             setNarrationInt(11);
@@ -159,6 +161,11 @@ public class RiveScreenTutorial : MonoBehaviour
         // }
 
         //fetching inputs
+
+        if (Input.GetKeyDown(KeyCode.Space) && spacebarTrigger != null)
+        {
+            spacebarTrigger.Fire();
+        }
 
         missionBools[0] = m_stateMachine[0].GetBool("mission1_complete");
         missionBools[1] = m_stateMachine[0].GetBool("mission2_complete1");
