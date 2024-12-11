@@ -164,12 +164,6 @@ public class RiveScreenTutorial : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && spacebarTrigger != null)
         {
-            Debug.Log("**************spacebar************");
-            Debug.Log("**************spacebar************");
-            Debug.Log("**************spacebar************");
-            Debug.Log("**************spacebar************");
-            Debug.Log("**************spacebar************");
-            Debug.Log("**************spacebar************");
             spacebarTrigger.Fire();
         }
 
@@ -203,6 +197,11 @@ public class RiveScreenTutorial : MonoBehaviour
                     return;
                 }
                 Vector3 mousePos = camera.ScreenToViewportPoint(Input.mousePosition);
+                if (mousePos.x < 0 || mousePos.x > 1 || mousePos.y < 0 || mousePos.y > 1)
+                {
+                    // Skip updates when the cursor is outside the screen
+                    return;
+                }
                 Vector2 mouseRiveScreenPos = new Vector2(
                     mousePos.x * camera.pixelWidth,
                     (1 - mousePos.y) * camera.pixelHeight
@@ -295,9 +294,6 @@ public class RiveScreenTutorial : MonoBehaviour
         // Access specific event properties
         if (reportedEvent.Name == "nextNarrationEvent")
         {
-            Debug.Log("**************next narration event****************");
-            Debug.Log("**************next narration event****************");
-            Debug.Log("**************next narration event****************");
             narrationInt++;
         }
     }
