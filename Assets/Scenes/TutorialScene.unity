@@ -9157,7 +9157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asset_list:
-  - {fileID: -4516626237390682484, guid: 6a60627828e414e8492041f6fe04e2e8, type: 3}
+  - {fileID: -4516626237390682484, guid: ad9dc4e3b32c041de9c92afbfe580d41, type: 3}
   - {fileID: -4516626237390682484, guid: b0369169b8abf412aa013b6d12d70ffa, type: 3}
   - {fileID: -4516626237390682484, guid: 6bc633d96e8894672a57fc428f4068c0, type: 3}
   cameraEvent: 20

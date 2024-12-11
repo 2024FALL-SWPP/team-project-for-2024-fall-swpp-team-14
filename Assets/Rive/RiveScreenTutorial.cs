@@ -147,7 +147,7 @@ public class RiveScreenTutorial : MonoBehaviour
         }
         else if (DataTransfer.skiptoTutorial3)
         {
-            setNarrationInt(15);
+            setNarrationInt(14);
             skipStarts[1].Value = true;
         }
     }
@@ -164,6 +164,12 @@ public class RiveScreenTutorial : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && spacebarTrigger != null)
         {
+            Debug.Log("**************spacebar************");
+            Debug.Log("**************spacebar************");
+            Debug.Log("**************spacebar************");
+            Debug.Log("**************spacebar************");
+            Debug.Log("**************spacebar************");
+            Debug.Log("**************spacebar************");
             spacebarTrigger.Fire();
         }
 
@@ -174,8 +180,6 @@ public class RiveScreenTutorial : MonoBehaviour
 
         ammo = m_stateMachine[1].GetNumber("ammo");
         hp = m_stateMachine[2].GetNumber("hp");
-        //alertCount = m_stateMachine[3].GetNumber("Alert_count");
-        //alertCount.Value = maxAlert;
         hp.Value = (int)(droneController.droneHp / 10);
         ammo.Value = droneController.currentReloadCnt;
 
@@ -191,7 +195,6 @@ public class RiveScreenTutorial : MonoBehaviour
             {
                 if (m_artboard[i] == null || m_stateMachine[i] == null /* || m_helper[i] == null*/)
                 {
-                    //Debug.Log("artboard is null for: " + i);
                     continue; // Skip uninitialized elements
                 }
                 m_helper[i]?.UpdateTextureHelper();
@@ -292,6 +295,9 @@ public class RiveScreenTutorial : MonoBehaviour
         // Access specific event properties
         if (reportedEvent.Name == "nextNarrationEvent")
         {
+            Debug.Log("**************next narration event****************");
+            Debug.Log("**************next narration event****************");
+            Debug.Log("**************next narration event****************");
             narrationInt++;
         }
     }

@@ -36,6 +36,9 @@ public class TutorialUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        narrationInt = riveScreenTutorial.getNarrationInt();
+        Debug.Log("Narration Int: " + narrationInt);
+
         if (door1 == null || door2 == null || door3 == null || riveScreenTutorial == null)
         {
             return;
@@ -53,7 +56,6 @@ public class TutorialUIManager : MonoBehaviour
         if (laptop1Controller.getIsInteractionSuccessful() && narrationInt == 14)
         {
             //riveScreenTutorial.setNarrationInt(15);
-            Debug.Log("**********************True!!!");
             riveScreenTutorial.missionBools[2].Value = true;
         }
         if (laptop2Controller.getIsInteractionSuccessful() && narrationInt == 16 && robot2 == null)
@@ -63,8 +65,7 @@ public class TutorialUIManager : MonoBehaviour
         }
 
 
-        narrationInt = riveScreenTutorial.getNarrationInt();
-        Debug.Log("Narration Int: " + narrationInt);
+
 
         switch (narrationInt)
         {
@@ -79,7 +80,10 @@ public class TutorialUIManager : MonoBehaviour
                 }
                 break;
             case 10: //make robot1
-                robot1.SetActive(true);
+                if (robot1 != null)
+                {
+                    robot1.SetActive(true);
+                }
                 break;
             case 11: //open door 2
                 if (!isDone[1])

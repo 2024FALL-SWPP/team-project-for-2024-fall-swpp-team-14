@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Rendering;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 [RequireComponent(typeof(Camera))]
 // Draw a Rive artboard to the screen. Must be bound to a camera.
 public class RiveAnimationManager : MonoBehaviour
