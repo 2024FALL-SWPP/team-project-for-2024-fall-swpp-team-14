@@ -147,7 +147,7 @@ public class RiveScreenTutorial : MonoBehaviour
         }
         else if (DataTransfer.skiptoTutorial3)
         {
-            setNarrationInt(14);
+            setNarrationInt(15);
             skipStarts[1].Value = true;
         }
     }
@@ -321,7 +321,7 @@ public class RiveScreenTutorial : MonoBehaviour
 
     IEnumerator WaitAndMapClear()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         droneController.MapClear();
         this.enabled = false;
     }
