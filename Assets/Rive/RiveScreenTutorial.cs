@@ -182,6 +182,11 @@ public class RiveScreenTutorial : MonoBehaviour
             setNarrationInt(11);
             skipStarts[0].Value = true;
         }
+        else if (DataTransfer.skiptoTutorial3)
+        {
+            setNarrationInt(15);
+            skipStarts[1].Value = true;
+        }
     }
 
     private void Update()
@@ -229,11 +234,6 @@ public class RiveScreenTutorial : MonoBehaviour
                     return;
                 }
                 Vector3 mousePos = camera.ScreenToViewportPoint(Input.mousePosition);
-                if (mousePos.x < 0 || mousePos.x > 1 || mousePos.y < 0 || mousePos.y > 1)
-                {
-                    // Skip updates when the cursor is outside the screen
-                    return;
-                }
                 Vector2 mouseRiveScreenPos = new Vector2(
                     mousePos.x * camera.pixelWidth,
                     (1 - mousePos.y) * camera.pixelHeight
@@ -367,7 +367,7 @@ public class RiveScreenTutorial : MonoBehaviour
 
     IEnumerator WaitAndMapClear()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         droneController.MapClear();
         this.enabled = false;
     }
