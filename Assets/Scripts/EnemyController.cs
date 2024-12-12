@@ -16,7 +16,7 @@ public abstract class EnemyController : MonoBehaviour
     protected float lastAttackTime;
     protected Vector3 initPosition;
     public float initDistance;
-    protected GameObject laserPrefab;
+    public GameObject laserPrefab;
     public int alertState = 0;
     protected int delayCount = 2;
     protected MainMapManager mainMapManager;
