@@ -43,6 +43,7 @@ public class RiveScreenTutorial : MonoBehaviour
 
     //For Fetching Inputs
     public int narrationInt = 0; //switch to private later?
+    private GameObject drone;
 
     private static bool flipY()
     {
@@ -108,6 +109,37 @@ public class RiveScreenTutorial : MonoBehaviour
         }
         OnRiveEvent += RiveScreen_OnRiveEvent;
 
+        drone = GameObject.FindWithTag("Player");
+        if (DataTransfer.skiptoTutorial3)
+        {
+            drone.transform.position = new Vector3(3, 0, -7);
+            drone.transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
+        else if (DataTransfer.skiptoTutorial2)
+        {
+            drone.transform.position = new Vector3(6, -0.5f, -3);
+            drone.transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else if (DataTransfer.skiptoTutorial1)
+        {
+            drone.transform.position = new Vector3(11, 0, 6);
+            drone.transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
+
+        Transform aircraft = drone.transform.Find("Aircraft1");
+        if (aircraft != null)
+        {
+            // Reset the aircraft's local rotation
+            Quaternion desiredGlobalRotation = Quaternion.Euler(-90, -180, -90);
+
+            // Calculate the required local rotation for the aircraft
+            Quaternion parentGlobalRotation = drone.transform.rotation;
+            Quaternion requiredLocalRotation = Quaternion.Inverse(parentGlobalRotation) * desiredGlobalRotation;
+
+            // Set the aircraft's local rotation
+            aircraft.localRotation = requiredLocalRotation;
+        }
+
     }
 
     void DrawRive(int i)
@@ -140,15 +172,15 @@ public class RiveScreenTutorial : MonoBehaviour
         skipStarts[0] = m_stateMachine[0].GetBool("startAtMission2");
         skipStarts[1] = m_stateMachine[0].GetBool("startAtMission3");
         spacebarTrigger = m_stateMachine[0].GetTrigger("nextNarration");
-        if (DataTransfer.skiptoTutorial2)
+        if (DataTransfer.skiptoTutorial3)
+        {
+            setNarrationInt(15);
+            skipStarts[1].Value = true;
+        }
+        else if (DataTransfer.skiptoTutorial2)
         {
             setNarrationInt(11);
             skipStarts[0].Value = true;
-        }
-        else if (DataTransfer.skiptoTutorial3)
-        {
-            setNarrationInt(14);
-            skipStarts[1].Value = true;
         }
     }
 
@@ -240,6 +272,15 @@ public class RiveScreenTutorial : MonoBehaviour
                     m_stateMachine[i]?.PointerUp(local);
                 }
                 //m_stateMachine[i]?.Advance(Time.deltaTime);
+            }
+
+            if (getNarrationInt() >= 14)
+            {
+                DataTransfer.skiptoTutorial3 = true;
+            }
+            else if (getNarrationInt() >= 11)
+            {
+                DataTransfer.skiptoTutorial2 = true;
             }
 
         }
