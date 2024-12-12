@@ -34,6 +34,7 @@ public class RiveScreenTutorial : MonoBehaviour
     public SMIBool[] missionBools = new SMIBool[4];
 
     public SMIBool[] skipStarts = new SMIBool[2];
+    private SMITrigger spacebarTrigger;
 
     private float animationTime = 0.0f;
 
@@ -138,6 +139,7 @@ public class RiveScreenTutorial : MonoBehaviour
     {
         skipStarts[0] = m_stateMachine[0].GetBool("startAtMission2");
         skipStarts[1] = m_stateMachine[0].GetBool("startAtMission3");
+        spacebarTrigger = m_stateMachine[0].GetTrigger("nextNarration");
         if (DataTransfer.skiptoTutorial2)
         {
             setNarrationInt(11);
@@ -160,6 +162,11 @@ public class RiveScreenTutorial : MonoBehaviour
 
         //fetching inputs
 
+        if (Input.GetKeyDown(KeyCode.Space) && spacebarTrigger != null)
+        {
+            spacebarTrigger.Fire();
+        }
+
         missionBools[0] = m_stateMachine[0].GetBool("mission1_complete");
         missionBools[1] = m_stateMachine[0].GetBool("mission2_complete1");
         missionBools[2] = m_stateMachine[0].GetBool("mission2_complete2");
@@ -167,8 +174,6 @@ public class RiveScreenTutorial : MonoBehaviour
 
         ammo = m_stateMachine[1].GetNumber("ammo");
         hp = m_stateMachine[2].GetNumber("hp");
-        //alertCount = m_stateMachine[3].GetNumber("Alert_count");
-        //alertCount.Value = maxAlert;
         hp.Value = (int)(droneController.droneHp / 10);
         ammo.Value = droneController.currentReloadCnt;
 
@@ -184,7 +189,6 @@ public class RiveScreenTutorial : MonoBehaviour
             {
                 if (m_artboard[i] == null || m_stateMachine[i] == null /* || m_helper[i] == null*/)
                 {
-                    //Debug.Log("artboard is null for: " + i);
                     continue; // Skip uninitialized elements
                 }
                 m_helper[i]?.UpdateTextureHelper();
@@ -317,7 +321,7 @@ public class RiveScreenTutorial : MonoBehaviour
 
     IEnumerator WaitAndMapClear()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         droneController.MapClear();
         this.enabled = false;
     }

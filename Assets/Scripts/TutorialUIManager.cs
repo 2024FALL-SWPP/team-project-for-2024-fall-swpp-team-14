@@ -36,6 +36,9 @@ public class TutorialUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        narrationInt = riveScreenTutorial.getNarrationInt();
+        Debug.Log("Narration Int: " + narrationInt);
+
         if (door1 == null || door2 == null || door3 == null || riveScreenTutorial == null)
         {
             return;
@@ -53,7 +56,6 @@ public class TutorialUIManager : MonoBehaviour
         if (laptop1Controller.getIsInteractionSuccessful() && narrationInt == 14)
         {
             //riveScreenTutorial.setNarrationInt(15);
-            Debug.Log("**********************True!!!");
             riveScreenTutorial.missionBools[2].Value = true;
         }
         if (laptop2Controller.getIsInteractionSuccessful() && narrationInt == 16 && robot2 == null)
@@ -62,47 +64,37 @@ public class TutorialUIManager : MonoBehaviour
             riveScreenTutorial.missionBools[3].Value = true;
         }
 
-
-        narrationInt = riveScreenTutorial.getNarrationInt();
-        Debug.Log("Narration Int: " + narrationInt);
-
-        switch (narrationInt)
-        {
-            case 5: //open door 1
-                if (!isDone[0])
-                {
-                    door1.transform.position = Vector3.MoveTowards(door1.transform.position, door1Target, 2 * Time.deltaTime);
-                    if (door1.transform.position == door1Target)
-                    {
-                        isDone[0] = true;
-                    }
-                }
-                break;
-            case 10: //make robot1
+        //cues for door opening and robot appearing
+        if (narrationInt >= 5 && !isDone[0])
+        { //open door 1
+            door1.transform.position = Vector3.MoveTowards(door1.transform.position, door1Target, 2 * Time.deltaTime);
+            if (door1.transform.position == door1Target)
+            {
+                isDone[0] = true;
+            }
+        }
+        else if (narrationInt == 10)
+        { //make robot1
+            if (robot1 != null)
+            {
                 robot1.SetActive(true);
-                break;
-            case 11: //open door 2
-                if (!isDone[1])
-                {
-                    door2.transform.position = Vector3.MoveTowards(door2.transform.position, door2Target, 2 * Time.deltaTime);
-                    if (door2.transform.position == door2Target)
-                    {
-                        isDone[1] = true;
-                    }
-                }
-                break;
-            case 16: //open door3
-                if (!isDone[2])
-                {
-                    door3.transform.position = Vector3.MoveTowards(door3.transform.position, door3Target, 2 * Time.deltaTime);
-                    if (door3.transform.position == door3Target)
-                    {
-                        isDone[2] = true;
-                    }
-                }
-                break;
-            default:
-                break;
+            }
+        }
+        else if (narrationInt >= 11 && !isDone[1])
+        { //open door 2
+            door2.transform.position = Vector3.MoveTowards(door2.transform.position, door2Target, 2 * Time.deltaTime);
+            if (door2.transform.position == door2Target)
+            {
+                isDone[1] = true;
+            }
+        }
+        else if (narrationInt >= 16 && !isDone[3])
+        { //open door3
+            door3.transform.position = Vector3.MoveTowards(door3.transform.position, door3Target, 2 * Time.deltaTime);
+            if (door3.transform.position == door3Target)
+            {
+                isDone[2] = true;
+            }
         }
     }
 }
