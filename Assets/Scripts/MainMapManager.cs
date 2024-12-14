@@ -19,6 +19,10 @@ public class MainMapManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         ceiling = GameObject.Find("Ceiling Skylight");
         isServerActivated = false;
+        if (DataTransfer.skiptoMainmap3)
+        {
+            isServerActivated = true;
+        }
 
         GameObject obj = GameObject.Find("Alert_Red");
         targetImage = obj.GetComponent<Image>();

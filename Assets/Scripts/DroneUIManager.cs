@@ -15,10 +15,13 @@ public class DroneUIManager : MonoBehaviour
     public GameObject gameOverScreen;
     public GameObject mapClearScreen;
     public bool hasMapClearScreenShown = false;
+    private RiveAnimationManager riveAnimationManager;
+    private GameObject drone;
 
     // Start is called before the first frame update
     void Start()
     {
+        drone = GameObject.FindWithTag("Player");
         gameOverRetryButton.onClick.AddListener(ResetCurrentScene);
         gameOverMenuScreenButton.onClick.AddListener(ShowMenuScreen);
         mapClearMenuScreenButton.onClick.AddListener(ShowMenuScreen);
@@ -45,6 +48,13 @@ public class DroneUIManager : MonoBehaviour
 
     void ShowMenuScreen()
     {
+        DataTransfer.skiptoMainmap1 = false;
+        DataTransfer.skiptoMainmap2 = false;
+        DataTransfer.skiptoMainmap3 = false;
+        DataTransfer.skiptoTutorial1 = false;
+        DataTransfer.skiptoTutorial2 = false;
+        DataTransfer.skiptoTutorial3 = false;
+
         SceneManager.LoadScene("MenuScreen");
     }
 
@@ -64,6 +74,13 @@ public class DroneUIManager : MonoBehaviour
 
     public void ShowMapClearScreen()
     {
+        DataTransfer.skiptoMainmap1 = false;
+        DataTransfer.skiptoMainmap2 = false;
+        DataTransfer.skiptoMainmap3 = false;
+        DataTransfer.skiptoTutorial1 = false;
+        DataTransfer.skiptoTutorial2 = false;
+        DataTransfer.skiptoTutorial3 = false;
+
         inGameScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         mapClearScreen.SetActive(true);

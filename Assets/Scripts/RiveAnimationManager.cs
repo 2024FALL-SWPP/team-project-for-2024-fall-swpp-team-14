@@ -42,6 +42,8 @@ public class RiveAnimationManager : MonoBehaviour
 
     int currentMission = 0;
     float missionChangedTime = -1f;
+    private GameObject drone;
+    private MainMapManager mainMapManager;
 
 
     // public StateMachine stateMachine => m_stateMachine;
@@ -81,6 +83,51 @@ public class RiveAnimationManager : MonoBehaviour
 
     private void Awake()
     {
+        isMainMapMissionCleared[0] = DataTransfer.skiptoMainmap2 || DataTransfer.skiptoMainmap3;
+        isMainMapMissionCleared[1] = DataTransfer.skiptoMainmap2 || DataTransfer.skiptoMainmap3;
+        isMainMapMissionCleared[2] = DataTransfer.skiptoMainmap3;
+
+        if (GameObject.Find("MainMapManager") != null)
+        {
+            mainMapManager = GameObject.Find("MainMapManager").GetComponent<MainMapManager>();
+        }
+        else
+        {
+            mainMapManager = null;
+        }
+
+        drone = GameObject.FindWithTag("Player");
+        if (DataTransfer.skiptoMainmap3)
+        {
+            drone.transform.position = new Vector3(42, 11, -13);
+            drone.transform.rotation = Quaternion.Euler(0, 130, 0);
+        }
+        else if (DataTransfer.skiptoMainmap2)
+        {
+            drone.transform.position = new Vector3(55, 5, -13);
+            drone.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (DataTransfer.skiptoMainmap1)
+        {
+            drone.transform.position = new Vector3(68, 2, 20);
+            drone.transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+
+        Transform aircraft = drone.transform.Find("Aircraft1");
+        if (aircraft != null)
+        {
+            // Reset the aircraft's local rotation
+            Quaternion desiredGlobalRotation = Quaternion.Euler(-90, -180, -90);
+
+            // Calculate the required local rotation for the aircraft
+            Quaternion parentGlobalRotation = drone.transform.rotation;
+            Quaternion requiredLocalRotation = Quaternion.Inverse(parentGlobalRotation) * desiredGlobalRotation;
+
+            // Set the aircraft's local rotation
+            aircraft.localRotation = requiredLocalRotation;
+        }
+
+
         while (currentMission < 4 && isMainMapMissionCleared[currentMission])
         {
             currentMission++;
@@ -153,6 +200,14 @@ public class RiveAnimationManager : MonoBehaviour
 
         if (currentMission < 4 && isMainMapMissionCleared[currentMission])
         {
+            if (currentMission == 1)
+            {
+                DataTransfer.skiptoMainmap2 = true;
+            }
+            else if (currentMission == 2)
+            {
+                DataTransfer.skiptoMainmap3 = true;
+            }
             m_stateMachine[currentMission].GetTrigger("Is_Checked").Fire();
             if (missionChangedTime == -1f)
             {
