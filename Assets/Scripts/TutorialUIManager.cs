@@ -37,7 +37,7 @@ public class TutorialUIManager : MonoBehaviour
     void Update()
     {
         narrationInt = riveScreenTutorial.getNarrationInt();
-        Debug.Log("Narration Int: " + narrationInt);
+        //Debug.Log("Narration Int: " + narrationInt);
 
         if (door1 == null || door2 == null || door3 == null || riveScreenTutorial == null)
         {
