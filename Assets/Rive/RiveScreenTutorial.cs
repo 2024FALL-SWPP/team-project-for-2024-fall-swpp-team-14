@@ -199,9 +199,9 @@ public class RiveScreenTutorial : MonoBehaviour
 
         //fetching inputs
 
-        if (Input.GetKeyDown(KeyCode.Space) && spacebarTrigger != null)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            spacebarTrigger.Fire();
+            OnSpacePressed();
         }
 
         missionBools[0] = m_stateMachine[0].GetBool("mission1_complete");
@@ -309,6 +309,14 @@ public class RiveScreenTutorial : MonoBehaviour
             StartCoroutine(WaitAndMapClear());
         }
 
+    }
+
+    public void OnSpacePressed()
+    {
+        if (spacebarTrigger != null)
+        {
+            spacebarTrigger.Fire();
+        }
     }
 
     private void OnDisable()

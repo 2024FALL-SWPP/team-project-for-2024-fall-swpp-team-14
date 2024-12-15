@@ -118,7 +118,7 @@ public class DroneController : MonoBehaviour
 
     void LateUpdate()
     {
-        Debug.Log(droneCamera.localPosition);
+        //Debug.Log(droneCamera.localPosition);
         if (controlEnabled && droneGameState == DroneGameState.InGame)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
