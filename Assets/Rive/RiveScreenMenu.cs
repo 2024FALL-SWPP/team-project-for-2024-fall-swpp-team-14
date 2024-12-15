@@ -128,6 +128,7 @@ public class RiveScreenMenu : MonoBehaviour
                 case 1: //Tutorial Mission 1
                     landPosition = new Vector3(11, 0, 6);
                     landRotation = Quaternion.Euler(0, -90, 0);
+                    DataTransfer.skiptoTutorial1 = true;
                     SceneManager.LoadSceneAsync("TutorialScene", LoadSceneMode.Single).completed += OnSceneLoaded;
                     break;
                 case 2: //Tutorial Mission2
@@ -145,17 +146,20 @@ public class RiveScreenMenu : MonoBehaviour
                 case 4: //MainMap Mission 1
                     landPosition = new Vector3(68, 2, 20);
                     landRotation = Quaternion.Euler(0, 180, 0);
+                    DataTransfer.skiptoMainmap1 = true;
                     SceneManager.LoadSceneAsync("Map_v2", LoadSceneMode.Single).completed += OnSceneLoaded;
 
                     break;
                 case 5: //MainMap Mission 2
                     landPosition = new Vector3(55, 5, -13);
                     landRotation = Quaternion.Euler(0, 0, 0);
+                    DataTransfer.skiptoMainmap2 = true;
                     SceneManager.LoadSceneAsync("Map_v2", LoadSceneMode.Single).completed += OnSceneLoaded;
                     break;
                 case 6: //MainMap Mission 3
                     landPosition = new Vector3(42, 11, -13);
                     landRotation = Quaternion.Euler(0, 130, 0);
+                    DataTransfer.skiptoMainmap3 = true;
                     SceneManager.LoadSceneAsync("Map_v2", LoadSceneMode.Single).completed += OnSceneLoaded;
                     break;
                 default:
