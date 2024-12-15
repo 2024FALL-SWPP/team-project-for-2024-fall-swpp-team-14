@@ -11,6 +11,7 @@ public class LaptopController : InteractionController
     private bool isInteractionDoing = false;
     public GameObject enterPassword;
     public GameObject passwordGuide;
+    private DroneController droneController;
 
     private KeyCode[] NumberkeyCodes =
     {
@@ -26,10 +27,15 @@ public class LaptopController : InteractionController
         KeyCode.Alpha9,
     };
 
+    void Start()
+    {
+        droneController = GameObject.Find("Drone").GetComponent<DroneController>();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (!isInteractionSuccessful && isInteractionDoing)
+        if (!isInteractionSuccessful && isInteractionDoing && droneController.droneGameState == DroneController.DroneGameState.InGame)
         {
             for (int i = 0; i < NumberkeyCodes.Length; i++)
             {

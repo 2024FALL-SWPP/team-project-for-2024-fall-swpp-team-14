@@ -12,6 +12,10 @@ public class MainMapManager : MonoBehaviour
     private Image targetImage;
     private float blinkSpeed = 1.0f;
     private float initialActivationTime;
+    private RiveAnimationManager riveAnimationManager;
+    private AudioSource audioSource; // AudioSource 컴포넌트를 연결
+    public AudioClip mission4Clip;
+    public AudioClip plainClip;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +34,9 @@ public class MainMapManager : MonoBehaviour
         color.a = 0;
         targetImage.color = color;
         initialActivationTime = -10.0f;
+
+        riveAnimationManager = GameObject.Find("RiveAnimationManager").GetComponent<RiveAnimationManager>();
+        audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -61,6 +68,25 @@ public class MainMapManager : MonoBehaviour
                 Color color = targetImage.color;
                 color.a = 0;
                 targetImage.color = color;
+            }
+        }
+
+        if(riveAnimationManager.isMainMapMissionCleared[2] && !riveAnimationManager.isMainMapMissionCleared[3])
+        {
+            if (audioSource.clip != mission4Clip)
+            {
+                audioSource.clip = mission4Clip;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            if (audioSource.clip != plainClip)
+            {
+                audioSource.clip = plainClip;
+                audioSource.loop = true;
+                audioSource.Play();
             }
         }
     }

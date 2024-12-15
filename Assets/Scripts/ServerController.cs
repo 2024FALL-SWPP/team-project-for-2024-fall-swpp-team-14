@@ -5,6 +5,7 @@ using UnityEngine;
 public class ServerController : InteractionController
 {
     private MainMapManager mainMapManager;
+    private DroneController droneController;
     // Update is called once per frame
     void Update()
     {
@@ -20,11 +21,17 @@ public class ServerController : InteractionController
         else
         {
             mainMapManager = null;
-        }    
+        }
+        droneController = GameObject.Find("Drone").GetComponent<DroneController>();
     }
 
     public override void StartInteraction()
     {
+        if (droneController.droneGameState != DroneController.DroneGameState.InGame)
+        {
+            return;
+        }
+
         Debug.Log("Server interaction succeed");
         isInteractionSuccessful = true;
         interactionManager.ExitInteraction(true);

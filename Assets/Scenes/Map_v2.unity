@@ -10325,7 +10325,7 @@ MonoBehaviour:
   - {fileID: -4516626237390682484, guid: 658312e0875de7a47bd658df88c9ba61, type: 3}
   - {fileID: -4516626237390682484, guid: 9c9c84569144d3741a27ffd2b829198f, type: 3}
   - {fileID: -4516626237390682484, guid: 3a00045df571ac747932fa0b024ff808, type: 3}
-  - {fileID: -4516626237390682484, guid: 86ff31cf0b5ecc44aab0ef09c521458a, type: 3}
+  - {fileID: -4516626237390682484, guid: 6dc5b460a9551534d849891a21ec73f7, type: 3}
   - {fileID: -4516626237390682484, guid: 4c5d90503b5c0584f98bfe38abb5cc56, type: 3}
   - {fileID: -4516626237390682484, guid: 6bc633d96e8894672a57fc428f4068c0, type: 3}
   - {fileID: -4516626237390682484, guid: b0369169b8abf412aa013b6d12d70ffa, type: 3}
@@ -69673,6 +69673,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isServerActivated: 0
+  mission4Clip: {fileID: 8300000, guid: b8b4c403935ad30419132bb9b3b39551, type: 3}
+  plainClip: {fileID: 8300000, guid: 3aa1a413cbe284a24875caac6a57abf5, type: 3}
 --- !u!4 &2116154600
 Transform:
   m_ObjectHideFlags: 0

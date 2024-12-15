@@ -40,6 +40,9 @@ public class DroneController : MonoBehaviour
     private bool damageAudioWasPlayed;
     private RiveAnimationManager riveAnimationManager;
 
+    private GameObject crosshair;
+    private GameObject pressInteractionMessage;
+
 
     void Start()
     {
@@ -71,6 +74,9 @@ public class DroneController : MonoBehaviour
         {
             riveAnimationManager = null;
         }
+
+        pressInteractionMessage = GameObject.Find("PressInteractionMessage");
+        crosshair = GameObject.Find("crosshair");
     }
     void Update()
     {
@@ -109,11 +115,15 @@ public class DroneController : MonoBehaviour
     public void EnableControl()
     {
         controlEnabled = true;
+        crosshair.SetActive(true);
+        pressInteractionMessage.SetActive(true);
     }
 
     public void DisableControl()
     {
         controlEnabled = false;
+        crosshair.SetActive(false);
+        pressInteractionMessage.SetActive(false);
     }
 
     void LateUpdate()
@@ -183,6 +193,7 @@ public class DroneController : MonoBehaviour
             else if (riveAnimationManager != null && other.CompareTag("Mission_04"))
             {
                 riveAnimationManager.isMainMapMissionCleared[3] = true;
+                StartCoroutine(WaitAndMapClear());
             }
         }
         return null;
@@ -238,6 +249,16 @@ public class DroneController : MonoBehaviour
     {
         droneGameState = DroneGameState.MapClear;
         droneUIManager.ShowMapClearScreen();
+    }
+
+    IEnumerator WaitAndMapClear()
+    {
+        yield return new WaitForSeconds(3f);
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        MapClear();
+        riveAnimationManager.enabled = false;
     }
 
     public bool getDamageAudioWasPlayed()

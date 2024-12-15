@@ -368,6 +368,9 @@ public class RiveScreenTutorial : MonoBehaviour
     IEnumerator WaitAndMapClear()
     {
         yield return new WaitForSeconds(3f);
+        Rigidbody rb = GameObject.FindWithTag("Player").GetComponent<Rigidbody>();
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         droneController.MapClear();
         this.enabled = false;
     }

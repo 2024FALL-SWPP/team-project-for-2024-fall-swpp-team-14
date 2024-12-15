@@ -44,7 +44,7 @@ public class InteractionManager : MonoBehaviour
 
     void Update()
     {
-        if (!isInteracting)
+        if (!isInteracting && droneController.droneGameState == DroneController.DroneGameState.InGame)
         {
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
             RaycastHit hit;
