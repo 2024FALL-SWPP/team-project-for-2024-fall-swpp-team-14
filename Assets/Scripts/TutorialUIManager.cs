@@ -45,22 +45,22 @@ public class TutorialUIManager : MonoBehaviour
         }
         if (robot1 == null && narrationInt == 10)
         {
-            //riveScreenTutorial.setNarrationInt(11);
+            // riveScreenTutorial.setNarrationInt(11);
             riveScreenTutorial.missionBools[0].Value = true;
         }
         if (serverController.getIsInteractionSuccessful() && narrationInt == 13)
         {
-            //riveScreenTutorial.setNarrationInt(14);
+            // riveScreenTutorial.setNarrationInt(14);
             riveScreenTutorial.missionBools[1].Value = true;
         }
         if (laptop1Controller.getIsInteractionSuccessful() && narrationInt == 14)
         {
-            //riveScreenTutorial.setNarrationInt(15);
+            // riveScreenTutorial.setNarrationInt(15);
             riveScreenTutorial.missionBools[2].Value = true;
         }
-        if (laptop2Controller.getIsInteractionSuccessful() && narrationInt == 16 && robot2 == null)
+        if (laptop2Controller.getIsInteractionSuccessful() && robot2 == null)
         {
-            //riveScreenTutorial.setNarrationInt(17);
+            // riveScreenTutorial.setNarrationInt(17);
             riveScreenTutorial.missionBools[3].Value = true;
         }
 
@@ -88,7 +88,7 @@ public class TutorialUIManager : MonoBehaviour
                 isDone[1] = true;
             }
         }
-        else if (narrationInt >= 16 && !isDone[3])
+        else if (narrationInt >= 15 && !isDone[3])
         { //open door3
             door3.transform.position = Vector3.MoveTowards(door3.transform.position, door3Target, 2 * Time.deltaTime);
             if (door3.transform.position == door3Target)

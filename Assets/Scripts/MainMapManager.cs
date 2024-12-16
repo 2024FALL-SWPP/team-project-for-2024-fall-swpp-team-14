@@ -13,7 +13,7 @@ public class MainMapManager : MonoBehaviour
     private float blinkSpeed = 1.0f;
     private float initialActivationTime;
     private RiveAnimationManager riveAnimationManager;
-    private AudioSource audioSource; // AudioSource 컴포넌트를 연결
+    public AudioSource audioSource; // AudioSource 컴포넌트를 연결
     public AudioClip mission4Clip;
     public AudioClip plainClip;
 

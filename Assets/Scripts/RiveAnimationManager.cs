@@ -24,7 +24,7 @@ public class RiveAnimationManager : MonoBehaviour
 
     private Rive.File[] m_file = new Rive.File[7];
     private Artboard[] m_artboard = new Artboard[7];
-    private StateMachine[] m_stateMachine = new StateMachine[7];
+    public StateMachine[] m_stateMachine = new StateMachine[7];
     private CameraTextureHelper[] m_helper = new CameraTextureHelper[7];
 
     public GameObject player;
