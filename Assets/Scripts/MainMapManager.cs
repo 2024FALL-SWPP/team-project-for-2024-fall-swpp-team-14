@@ -36,7 +36,7 @@ public class MainMapManager : MonoBehaviour
         initialActivationTime = -10.0f;
 
         riveAnimationManager = GameObject.Find("RiveAnimationManager").GetComponent<RiveAnimationManager>();
-        audioSource = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+        audioSource = GameObject.Find("Drone").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
