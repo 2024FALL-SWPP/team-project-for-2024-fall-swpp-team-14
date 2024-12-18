@@ -31,8 +31,8 @@ public class RiveScreenMenu : MonoBehaviour
     public StateMachine stateMachine => m_stateMachine;
 
     private SMINumber moveToMission; //input from rive
-    private Vector3 landPosition;
-    private Quaternion landRotation;
+    public Vector3 landPosition;
+    public Quaternion landRotation;
     public RiveScreenTutorial riveScreenTutorial;
 
 
@@ -232,7 +232,7 @@ public class RiveScreenMenu : MonoBehaviour
 
     }
 
-    private void OnSceneLoaded(AsyncOperation asyncOperation)
+    public void OnSceneLoaded(AsyncOperation asyncOperation)
     {
         GameObject drone = GameObject.FindWithTag("Player");
         if (drone != null)

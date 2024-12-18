@@ -46,7 +46,7 @@ public class DroneUIManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    void ShowMenuScreen()
+    public void ShowMenuScreen()
     {
         DataTransfer.skiptoMainmap1 = false;
         DataTransfer.skiptoMainmap2 = false;
